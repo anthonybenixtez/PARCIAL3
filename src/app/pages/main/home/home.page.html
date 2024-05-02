@@ -1,18 +1,11 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>home</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header [showMenu]="true" title="Inicio"></app-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">home</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <ion-button (click)="signOut()" expand="block" fill="clear" shape="round">
-    Click me
+<ion-content>
+  <ion-button *ngIf="utilsSvc.shouldShowElementForRole('Administrador', userRole)" expand="block" fill="clear" shape="round">
+    Botón para Administrador
   </ion-button>
-
+  <ion-button *ngIf="utilsSvc.shouldShowElementForRole('Docente', userRole)" expand="block" fill="clear" shape="round">
+    Botón para Docente
+  </ion-button>
 </ion-content>

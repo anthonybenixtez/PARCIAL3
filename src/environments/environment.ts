@@ -6,12 +6,12 @@ export const environment = {
   production: false,
 
   firebaseConfig : {
-    apiKey: "AIzaSyDAxpOxHpiLG_oDbZQDWY9fmiDJ4lRvwzI",
-    authDomain: "agroecologia-708f7.firebaseapp.com",
-    projectId: "agroecologia-708f7",
-    storageBucket: "agroecologia-708f7.appspot.com",
-    messagingSenderId: "274176069575",
-    appId: "1:274176069575:web:66c225cb15e0379e3613e2"
+    apiKey: "AIzaSyDuz1GbBOdVliIRCGG4JB9akqp3X6uEPsQ",
+    authDomain: "parcial3-83cfb.firebaseapp.com",
+    projectId: "parcial3-83cfb",
+    storageBucket: "parcial3-83cfb.appspot.com",
+    messagingSenderId: "6585745792",
+    appId: "1:6585745792:web:7dac4fd2b9ddb3f1398165"
   }
 };
 

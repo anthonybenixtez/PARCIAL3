@@ -5,7 +5,8 @@ import { User } from '../models/user.model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { getFirestore, setDoc, doc, getDoc, addDoc, collection, collectionData, query, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-
+import { switchMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -58,7 +59,11 @@ signUp(user: User){
 
 
   //=====================Base de Datos===============================
-
+  //=================== Obtener documentos de una coleccion ================================
+  getCollectionData(path: string, collectionQuery?: any){
+    const ref = collection(getFirestore(), path);
+    return collectionData(query(ref, collectionQuery), {idField: 'aid'});
+  }
 //=================== Setear un documento ================================
 setDocument(path: string, data: any){
   return setDoc(doc(getFirestore(), path), data);
@@ -67,4 +72,35 @@ setDocument(path: string, data: any){
 async getDocument(path: string){
   return (await getDoc(doc(getFirestore(), path))).data();
 }
+
+//===================== Agregar un Documento ===============================
+
+addDocument(path: string, data: any){
+  return addDoc(collection(getFirestore(), path), data);
+}
+//=================== Actualizar un documento ================================
+updateDocument(path: string, data: any){
+  return updateDoc(doc(getFirestore(), path), data);
+}
+
+//=================== Eliminar un documento ================================
+deleteDocument(path: string){
+  return deleteDoc(doc(getFirestore(), path));
+}
+
+
+
+  // Obtener el usuario actual y su rol desde Firestore
+  getCurrentUserWithRole(): Observable<User> {
+    return this.auth.authState.pipe(
+      switchMap(user => {
+        if (user) {
+          return this.firestore.doc<User>(`users/${user.uid}`).valueChanges();
+        } else {
+          return of(null);
+          
+        }
+      })
+    );
+  }
 }
