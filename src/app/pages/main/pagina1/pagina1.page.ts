@@ -18,6 +18,7 @@ export class Pagina1Page implements OnInit {
 
   loading: boolean = false;
   materias: Materias[] = [];
+  cultivoSeleccionado: Materias;
 
   ngOnInit() {
   }
@@ -42,11 +43,11 @@ export class Pagina1Page implements OnInit {
   }
 
   // Función para abrir el detalle del cultivo seleccionado
-  async materiasDetail(materias?: Materias) {
+  async materiasDetail(materia?: Materias) {
     let success = await this.utilsSvc.presentModal({
       component: MateriasDetailComponent,
       cssClass: 'materias-detal-modal',
-      componentProps: {materias} // Pasa el cultivo específico al modal
+      componentProps: {materia} // Pasa el cultivo específico al modal
     });
 
     if (success) this.getMaterias();
@@ -93,14 +94,14 @@ export class Pagina1Page implements OnInit {
   //==================== Eliminar Producto ======================
   async deleteMaterias(materias: Materias) {
 
-    let path = `/Materias/${materias.uid}`
+    let path = `/Materias/${materias.aid}`
 
     const loading = await this.utilsSvc.loading();
     await loading.present();
 
     this.firebaseSvc.deleteDocument(path).then(async res => {
 
-      this.materias = this.materias.filter(m => m.uid !== materias.uid);
+      this.materias = this.materias.filter(m => m.aid !== materias.aid);
 
       this.utilsSvc.presentToast({
         message: 'Materia eliminado exitosamente',

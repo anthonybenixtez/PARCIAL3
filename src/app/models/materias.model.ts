@@ -1,5 +1,5 @@
 export interface Materias {
-    uid: string;
+    aid: string;
     name: string;
     descripcion: string;
 }

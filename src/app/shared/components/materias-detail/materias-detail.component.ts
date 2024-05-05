@@ -8,7 +8,7 @@ import { Materias } from 'src/app/models/materias.model';
 })
 export class MateriasDetailComponent  implements OnInit {
 
-  @Input() materias: Materias; // Recibe el cultivo específico
+  @Input() materia: Materias; // Recibe el cultivo específico
 
 
   constructor() { }
