@@ -12,10 +12,9 @@ import { UtilsService } from 'src/app/services/utils.service';
 export class MainPage implements OnInit {
 pages = [
   {title: 'Pagina Principal', url: '/main/home', icon: 'home-outline'},
-  {title: 'Materias', url: '/main/pagina1', icon: 'book-outline'},
-
-
- 
+  {title: 'Materias', url: '/main/pagina1', icon: 'albums-outline'},
+  {title: 'Maestros', url: '/main/pagina2', icon: 'people'},
+  {title: 'Alumnos', url: '/main/pagina4', icon: 'school'},
 ]
 
 router= inject(Router);

@@ -5,6 +5,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AddUpdateMateriasComponent } from './components/add-update-materias/add-update-materias.component';
+import { MateriasDetailComponent } from './components/materias-detail/materias-detail.component';
 
 
 
@@ -13,6 +15,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HeaderComponent,
     CustomInputComponent,
     LogoComponent,
+    AddUpdateMateriasComponent,
+    MateriasDetailComponent
     
   ],
   exports: [
@@ -20,7 +24,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CustomInputComponent,
     LogoComponent,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    AddUpdateMateriasComponent,
+    MateriasDetailComponent
   ],
   imports: [
     CommonModule,

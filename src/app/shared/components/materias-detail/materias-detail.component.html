@@ -1,0 +1,18 @@
+<app-header [isAuth]="true"  [isModal]="true" title="Detalles de la Materia"></app-header>
+
+<ion-content class="ion-padding">
+
+
+  <ion-card class="materias-card" *ngIf="materias">
+    <ion-card-header>
+      <ion-card-title>{{materias.name}}</ion-card-title>
+    </ion-card-header>
+
+
+    <div class="materia-box">
+      <ion-label class="label">Descripción:</ion-label>
+      <ion-text class="data">{{materias.descripcion}}</ion-text>
+    </div>
+
+  </ion-card>  
+</ion-content>

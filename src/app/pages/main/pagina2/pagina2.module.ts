@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { Pagina1PageRoutingModule } from './pagina1-routing.module';
+import { Pagina2PageRoutingModule } from './pagina2-routing.module';
 
-import { Pagina1Page } from './pagina1.page';
+import { Pagina2Page } from './pagina2.page';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
@@ -14,10 +14,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    Pagina1PageRoutingModule,
+    Pagina2PageRoutingModule,
     SharedModule
-
   ],
-  declarations: [Pagina1Page]
+  declarations: [Pagina2Page]
 })
-export class Pagina1PageModule {}
+export class Pagina2PageModule {}

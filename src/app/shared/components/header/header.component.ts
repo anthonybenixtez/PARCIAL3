@@ -10,14 +10,21 @@ import { UtilsService } from 'src/app/services/utils.service';
 })
 export class HeaderComponent implements OnInit {
 
+  @Input() isAuth: boolean = false; // Recibe el valor de isAuth desde el componente padre
   @Input() title!: string;
   @Input() backButton!: string;
   @Input() isModal!: boolean;
   @Input() showMenu!: boolean;
 
   userRole: string = ''; // Aquí almacenaremos el rol del usuario
+  showSearch: boolean = false;
+
 
   constructor(private utilsSvc: UtilsService, private firebaseSvc: FirebaseService) { }
+
+  toggleSearch() {
+    this.showSearch = !this.showSearch;
+  }
 
   ngOnInit() {
     this.getUserRole(); // Llamamos a la función para obtener el rol del usuario al cargar el componente
@@ -35,5 +42,9 @@ export class HeaderComponent implements OnInit {
 
   signOut(){
     this.firebaseSvc.signOut();
+  }
+
+  dismissModal(){
+    this.utilsSvc.dismissModal();
   }
 }
