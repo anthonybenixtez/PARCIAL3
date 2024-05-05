@@ -1,5 +1,9 @@
 <app-header [showMenu]="true" title="Materias"></app-header>
 
+
+<br>
+<br>
+
 <ion-content fullscreen="true">
 
   <!-------- PRODUCTOS -------->
@@ -7,6 +11,8 @@
   <div class="data ion-text-center">
     <strong>Materias:</strong>
   </div>
+
+  <br>
   <ion-item-sliding class="product-item" *ngFor="let m of materias">
     <ion-item (click)="materiasDetail(m)">
       <ion-label class="ion-text-center">
@@ -19,12 +25,12 @@
     <ion-item-options>
 
         <!--=========== Editar Cultivo =============-->
-      <ion-item-option (click)="AddUpdateMaterias(m)">
+      <ion-item-option *ngIf="utilsSvc.shouldShowElementForRole('Administrador', userRole)" (click)="AddUpdateMaterias(m)">
         <ion-icon class="option-btn" name="create-outline"></ion-icon>
       </ion-item-option>
 
                   <!--=========== Eliminar Cultivo =============-->          
-      <ion-item-option (click)="confirmDeleteMaterias(m)" color="danger">
+      <ion-item-option *ngIf="utilsSvc.shouldShowElementForRole('Administrador', userRole)" (click)="confirmDeleteMaterias(m)" color="danger">
         <ion-icon class="option-btn" name="trash-outline"></ion-icon>
       </ion-item-option>
 
@@ -52,7 +58,7 @@
 
   <!--=========== Nuevo Cultivo =============-->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="AddUpdateMaterias()" color="success">
+    <ion-fab-button *ngIf="utilsSvc.shouldShowElementForRole('Administrador', userRole)" (click)="AddUpdateMaterias()" color="success">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
