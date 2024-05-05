@@ -15,7 +15,7 @@ export class AddUpdateMateriasComponent  implements OnInit {
 
   //ponemos los campos de materias en un grupo
   form = new FormGroup({
-    uid: new FormControl(''),
+    aid: new FormControl(''),
     name: new FormControl('', [Validators.required, Validators.minLength(2)]),
     descripcion: new FormControl('', [Validators.required, Validators.minLength(4)])
   });
@@ -46,7 +46,7 @@ export class AddUpdateMateriasComponent  implements OnInit {
     const loading = await this.utilsSvc.loading();
     await loading.present();
     
-    delete this.form.value.uid;
+    delete this.form.value.aid;
 
     this.firebaseSvc.addDocument(path, this.form.value).then(async res =>{
       
@@ -81,12 +81,12 @@ export class AddUpdateMateriasComponent  implements OnInit {
 async updateMaterias() {
 
 
-  let path =`/Materias/${this.materias.uid}`
+  let path =`/Materias/${this.materias.aid}`
 
   const loading = await this.utilsSvc.loading();
   await loading.present();
 
-  delete this.form.value.uid;
+  delete this.form.value.aid;
 
 
   this.firebaseSvc.updateDocument(path, this.form.value).then(async res => {
