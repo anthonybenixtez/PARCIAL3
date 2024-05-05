@@ -1,5 +1,5 @@
 export interface Maestros {
-    uid: string;
+    aid: string;
     name: string;
     apellido: string;
     identificacion: string;

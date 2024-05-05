@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddUpdateMateriasComponent } from './components/add-update-materias/add-update-materias.component';
 import { MateriasDetailComponent } from './components/materias-detail/materias-detail.component';
+import { MaestrosDetailComponent } from './components/maestros-detail/maestros-detail.component';
+import { AddUpdateMaestrosComponent } from './components/add-update-maestros/add-update-maestros.component';
 
 
 
@@ -16,7 +18,9 @@ import { MateriasDetailComponent } from './components/materias-detail/materias-d
     CustomInputComponent,
     LogoComponent,
     AddUpdateMateriasComponent,
-    MateriasDetailComponent
+    MateriasDetailComponent,
+    MaestrosDetailComponent,
+    AddUpdateMaestrosComponent
     
   ],
   exports: [
@@ -26,7 +30,9 @@ import { MateriasDetailComponent } from './components/materias-detail/materias-d
     ReactiveFormsModule,
     CommonModule,
     AddUpdateMateriasComponent,
-    MateriasDetailComponent
+    MateriasDetailComponent,
+    MaestrosDetailComponent,
+    AddUpdateMaestrosComponent
   ],
   imports: [
     CommonModule,

@@ -5,6 +5,8 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { AddUpdateMateriasComponent } from 'src/app/shared/components/add-update-materias/add-update-materias.component';
 import { MateriasDetailComponent } from 'src/app/shared/components/materias-detail/materias-detail.component';
+import { User } from 'src/app/models/user.model'; // Asegúrate de importar el modelo de usuario aquí
+
 
 @Component({
   selector: 'app-pagina1',
@@ -19,8 +21,13 @@ export class Pagina1Page implements OnInit {
   loading: boolean = false;
   materias: Materias[] = [];
   cultivoSeleccionado: Materias;
+  userRole: string = ''; // Aquí deberías obtener el rol del usuario
+
 
   ngOnInit() {
+
+    this.getUserRole(); // Llamamos a la función para obtener el rol del usuario al inicializar el componente
+
   }
 
 
@@ -129,6 +136,16 @@ export class Pagina1Page implements OnInit {
       loading.dismiss();
     })
 
+  }
+
+
+  getUserRole() {
+    this.firebaseSvc.getCurrentUserWithRole().subscribe((user: User) => {
+      if (user) {
+        // Suponemos que 'user.role' es el campo que contiene el rol del usuario en Firestore
+        this.userRole = user.role;
+      }
+    });
   }
 
 }

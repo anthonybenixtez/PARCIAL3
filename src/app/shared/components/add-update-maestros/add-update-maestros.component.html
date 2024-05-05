@@ -1,0 +1,51 @@
+<app-header [isAuth]="true" [isModal]="true"
+  [title]="maestros ? 'Actualizar Maestro' : 'Agregar Maestro' "></app-header>
+
+<ion-content>
+  <form [formGroup]="form" class="ion-padding ion-text-center" (ngSubmit)="submit()" (keypress.enter)="submit()">
+
+    <!--Nombre-->
+
+    <app-custom-input autocomplete="nombre" [control]="form.controls.name" type="text"
+      label="Nombre"></app-custom-input>
+
+    <div class="validators" *ngIf="form.controls.name.errors && form.controls.name.touched">
+      <div *ngIf="form.controls.name.errors?.['required']">Este campo es necesario</div>
+      <div *ngIf="form.controls.name.errors?.['minLength']">2 caracteres minimos requeridos</div>
+    </div>
+
+
+
+    <app-custom-input autocomplete="apellido" [control]="form.controls.apellido" type="text"
+      label="Descripcion"></app-custom-input>
+
+    <div class="validators" *ngIf="form.controls.apellido.errors && form.controls.apellido.touched">
+      <div *ngIf="form.controls.apellido.errors?.['required']">Este campo es necesario</div>
+      <div *ngIf="form.controls.apellido.errors?.['minLength']">4 caracteres minimos requeridos</div>
+    </div>
+
+    <app-custom-input autocomplete="identificacion" [control]="form.controls.identificacion" type="text"
+      label="Identificador"></app-custom-input> 
+
+    <div class="validators" *ngIf="form.controls.identificacion.errors && form.controls.identificacion.touched">
+      <div *ngIf="form.controls.identificacion.errors?.['required']">Este campo es necesario</div>
+      <div *ngIf="form.controls.identificacion.errors?.['minLength']">4 caracteres minimos requeridos</div>
+    </div>
+
+    <app-custom-input autocomplete="email" [control]="form.controls.email" type="text"
+      label="Correo Electronico"></app-custom-input>
+
+    <div class="validators" *ngIf="form.controls.email.errors && form.controls.email.touched">
+      <div *ngIf="form.controls.email.errors?.['required']">Este campo es necesario</div>
+      <div *ngIf="form.controls.email.errors?.['minLength']">4 caracteres minimos requeridos</div>
+    </div>
+
+
+    <ion-button mode="ios" class="ion-margin" type="submit" [disabled]="form.invalid">
+      {{maestros ? 'Actualizar Maestro' : 'Agregar Maestro'}}
+      <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
+    </ion-button>
+
+  </form>
+
+</ion-content>
