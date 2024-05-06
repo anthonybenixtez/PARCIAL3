@@ -1,13 +1,15 @@
 export interface Alumnos {
-    uid:string;
+    eid:string;
+    carnet:string;
     name:string;
     apellido:string;
     email:string;
-    carnet:string;
-    ciclo: string;
+    ciclo: number;
     nota1:number;
     nota2:number;
     nota3:number;
     nota4:number;
     promedio:number;
+    materiaId: string;
+    maestroId: string;
   }

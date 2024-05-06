@@ -9,6 +9,8 @@ import { AddUpdateMateriasComponent } from './components/add-update-materias/add
 import { MateriasDetailComponent } from './components/materias-detail/materias-detail.component';
 import { MaestrosDetailComponent } from './components/maestros-detail/maestros-detail.component';
 import { AddUpdateMaestrosComponent } from './components/add-update-maestros/add-update-maestros.component';
+import { AddUpdateAlumnosComponent } from './components/add-update-alumnos/add-update-alumnos.component';
+import { AlumnosDetailComponent } from './components/alumnos-detail/alumnos-detail.component';
 
 
 
@@ -20,7 +22,9 @@ import { AddUpdateMaestrosComponent } from './components/add-update-maestros/add
     AddUpdateMateriasComponent,
     MateriasDetailComponent,
     MaestrosDetailComponent,
-    AddUpdateMaestrosComponent
+    AddUpdateMaestrosComponent,
+    AddUpdateAlumnosComponent,
+    AlumnosDetailComponent
     
   ],
   exports: [
@@ -32,7 +36,9 @@ import { AddUpdateMaestrosComponent } from './components/add-update-maestros/add
     AddUpdateMateriasComponent,
     MateriasDetailComponent,
     MaestrosDetailComponent,
-    AddUpdateMaestrosComponent
+    AddUpdateMaestrosComponent,
+    AddUpdateAlumnosComponent,
+    AlumnosDetailComponent
   ],
   imports: [
     CommonModule,

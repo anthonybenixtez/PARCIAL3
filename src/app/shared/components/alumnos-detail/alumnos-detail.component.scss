@@ -1,0 +1,60 @@
+/* main.page.scss */
+
+.maestros-card {
+    max-width: 400px;
+    margin: 20px auto; /* Proporciona margen para separar del contenido circundante */
+    border-radius: 15px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15); /* Aumentar la sombra para mayor profundidad */
+  }
+  
+  .maestros-card ion-card-header {
+    background-color: #4CAF50; /* Color de fondo del encabezado */
+    border-radius: 15px 15px 0 0; /* Esquinas redondeadas solo arriba */
+    padding: 15px; /* Aumenta el padding para dar espacio al contenido */
+  }
+  
+  .maestros-card ion-card-title {
+    color: white; /* Texto en blanco */
+    font-size: 1.5em; /* Aumentar el tamaño del título */
+  }
+  
+  .maestro-box {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px; /* Más espacio horizontal y vertical */
+    border-bottom: 1px solid #ddd; /* Línea de separación para cada campo */
+  }
+  
+  .maestro-box:last-child {
+    border-bottom: none; /* Quita la línea del último elemento */
+  }
+  
+  .label {
+    width: 40%; /* Mantiene el ancho del label */
+    font-weight: bold; /* Negrita para las etiquetas */
+  }
+  
+  .data {
+    flex-grow: 1; /* El texto se expande para llenar el espacio restante */
+    padding-left: 10px; /* Añade un pequeño padding entre el label y el contenido */
+  }
+  
+  @media (max-width: 500px) {
+    .maestros-card {
+      max-width: 90%; /* Se adapta a pantallas más pequeñas */
+    }
+  
+    .maestro-box {
+      flex-direction: column; /* Para pantallas pequeñas, los campos se apilan verticalmente */
+      align-items: flex-start; /* Alinea a la izquierda en pantallas pequeñas */
+    }
+  
+    .label {
+      width: auto; /* Deja que el label ocupe el espacio necesario */
+    }
+  
+    .data {
+      padding-left: 0; /* Elimina el padding para alineación vertical */
+    }
+  }
+  
