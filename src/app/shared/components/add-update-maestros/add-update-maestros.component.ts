@@ -26,9 +26,14 @@ export class AddUpdateMaestrosComponent  implements OnInit {
   firebaseSvc= inject(FirebaseService);
   utilsSvc= inject(UtilsService)
   userRole: string = ''; // Aquí deberías obtener el rol del usuario
+  materias: any[];
 
-  ngOnInit() {
+
+  ngOnInit(): void {
     if (this.maestros) this.form.setValue(this.maestros);
+    this.firebaseSvc.getMaterias().subscribe((materias) => {
+      this.materias = materias;
+    });
   }
 
   submit(){
@@ -119,6 +124,12 @@ async updateMaestros() {
   })
 
 }
+
+onSelectMateria(event) {
+  const selectedMateriaId = event.target.value;
+  this.maestros.materiaId = selectedMateriaId;
+}
+
 
 
 }

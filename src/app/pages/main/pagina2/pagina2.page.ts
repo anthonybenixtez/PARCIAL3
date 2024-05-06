@@ -24,10 +24,11 @@ export class Pagina2Page implements OnInit {
   userRole: string = ''; // Aquí deberías obtener el rol del usuario
 
 
+
   ngOnInit() {
 
     this.getUserRole(); // Llamamos a la función para obtener el rol del usuario al inicializar el componente
-
+  
   }
 
 

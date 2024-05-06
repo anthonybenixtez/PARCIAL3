@@ -103,4 +103,7 @@ deleteDocument(path: string){
       })
     );
   }
+  getMaterias(): Observable<any[]> {
+    return this.firestore.collection('Materias').valueChanges({ idField: 'aid' });
+  }
 }

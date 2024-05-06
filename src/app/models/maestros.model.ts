@@ -4,4 +4,5 @@ export interface Maestros {
     apellido: string;
     identificacion: string;
     email:string;
+    materiaId: string;
 }

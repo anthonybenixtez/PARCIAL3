@@ -1,27 +1,27 @@
-<app-header [isAuth]="true"  [isModal]="true" title="Detalles del Maestro"></app-header>
-
 <ion-content class="ion-padding">
-
-
   <ion-card class="maestros-card" *ngIf="maestro">
     <ion-card-header>
-      <ion-card-title>{{maestro.name}}</ion-card-title>
+      <ion-card-title>{{ maestro.name }}</ion-card-title>
     </ion-card-header>
 
     <div class="maestro-box">
       <ion-label class="label">Apellido:</ion-label>
-      <ion-text class="data">{{maestro.apellido}}</ion-text>
+      <ion-text class="data">{{ maestro.apellido }}</ion-text>
     </div>
 
     <div class="maestro-box">
       <ion-label class="label">Identificador:</ion-label>
-      <ion-text class="data">{{maestro.identificacion}}</ion-text>
+      <ion-text class="data">{{ maestro.identificacion }}</ion-text>
     </div>
 
     <div class="maestro-box">
       <ion-label class="label">Correo electronico:</ion-label>
-      <ion-text class="data">{{maestro.email}}</ion-text>
+      <ion-text class="data">{{ maestro.email }}</ion-text>
     </div>
 
-  </ion-card>  
+    <div class="maestro-box">
+      <ion-label class="label">Materia:</ion-label>
+      <ion-text class="data">{{ getMateriaNombre(maestro.materiaId) }}</ion-text>
+    </div>
+  </ion-card>
 </ion-content>
