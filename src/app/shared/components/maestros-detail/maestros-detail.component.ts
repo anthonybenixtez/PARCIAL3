@@ -22,13 +22,27 @@ export class MaestrosDetailComponent implements OnInit {
     });
   }
 
-  onSelectMateria(event) {
-    const selectedMateriaId = event.target.value;
-    this.materiaSeleccionada = this.materias.find(materia => materia.id === selectedMateriaId);
+  onSelectMateria(event: any) {
+    const selectedMateriaId = event.detail?.value; // Uso de `event.detail.value` para obtener el valor seleccionado
+    if (selectedMateriaId) {
+      this.materiaSeleccionada = this.materias.find((materia) => materia.aid === selectedMateriaId); // Compara con `aid`
+      if (!this.materiaSeleccionada) {
+        console.warn('Materia no encontrada con ID:', selectedMateriaId);
+      }
+    } else {
+      console.warn('Evento de selección no válido:', event);
+    }
   }
+  
   getMateriaNombre(materiaId: string): string {
-    const materia = this.materias.find(m => m.aid === materiaId);
-    return materia ? materia.name : 'Materia no encontrada';
+    if (!materiaId || materiaId.trim() === "") {
+      return "ID inválido";
+    }
+  
+    const materia = this.materias.find((m) => m.aid === materiaId); // Asegúrate de comparar con la propiedad correcta
+  
+    return materia ? materia.name : "Materia no encontrada";
   }
-
+  
+  
 }

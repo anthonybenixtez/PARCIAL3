@@ -34,7 +34,7 @@
     <!-- Select de Materias -->
     <ion-item>
       <ion-label>Materia</ion-label>
-      <ion-select formControlName="materia">
+      <ion-select formControlName="materiaId" (ionChange)="onSelectMateria($event)">
         <ion-select-option *ngFor="let m of materias" [value]="m.aid">{{ m.name }}</ion-select-option>
       </ion-select>
     </ion-item>
