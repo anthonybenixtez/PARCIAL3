@@ -67,7 +67,7 @@ export class UtilsService {
   }
 
     // Función para verificar si se debe mostrar u ocultar un elemento según el rol del usuario
-    shouldShowElementForRole(role: string, userRole: string): boolean {
+    public shouldShowElementForRole(role: string, userRole: string): boolean {
       return role === userRole;
     }
 

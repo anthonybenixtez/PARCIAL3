@@ -54,6 +54,18 @@ export class AuthPage implements OnInit {
       this.firebaseSvc.getDocument(path).then((user: User) => {
         this.utilsSvc.saveInLocalStorage('user', user);
 
+        // Buscar el maestro asociado por correo electrónico
+        this.firebaseSvc.getMaestroByEmail(user.email).subscribe((maestro) => {
+          // Asociar al usuario al maestro encontrado
+          if (maestro) {
+            this.utilsSvc.saveInLocalStorage('maestro', maestro);
+          } else {
+            console.log("No se encontró maestro asociado");
+          }
+        }, error => {
+          console.log("Error al buscar maestro:", error);
+        });
+
         this.form.reset();
 
         this.utilsSvc.presentToast({

@@ -1,8 +1,8 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { AddUpdateAlumnosComponent } from 'src/app/shared/components/add-update-alumnos/add-update-alumnos.component';
 import { AlumnosDetailComponent } from 'src/app/shared/components/alumnos-detail/alumnos-detail.component';
-import { User } from 'src/app/models/user.model'; // Asegúrate de importar el modelo de usuario aquí
+import { User } from 'src/app/models/user.model';
 import { Alumnos } from 'src/app/models/alumnos.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -13,71 +13,164 @@ import { UtilsService } from 'src/app/services/utils.service';
   styleUrls: ['./pagina4.page.scss'],
 })
 export class Pagina4Page implements OnInit {
- firebaseSvc = inject(FirebaseService);
-  utilsSvc = inject(UtilsService)
-  constructor(private modalController: ModalController) { }
-
-  loading: boolean = false;
+  constructor(
+    private modalController: ModalController,
+    private firebaseSvc: FirebaseService,
+    public utilsSvc: UtilsService
+  ) {}
+  
+  loading = false;
   alumnos: Alumnos[] = [];
-  alumnoSeleccionado: Alumnos;
-  userRole: string = ''; // Aquí deberías obtener el rol del usuario
-
-
+  user: User;
+  userRole: string = '';
+  materiaId: string;
 
   ngOnInit() {
+    this.getCurrentUser();
+  }
 
-    this.getUserRole(); // Llamamos a la función para obtener el rol del usuario al inicializar el componente
-  
+  async getCurrentUser() {
+    this.firebaseSvc.getCurrentUserWithRole().subscribe((user: User) => {
+      this.user = user;
+      this.userRole = user.role;
+      if (this.userRole === 'Docente') {
+        this.getMaestroMateriaAndAlumnos();
+      } else {
+        this.getAlumnos();
+      }
+    });
+  }
+
+  async getMaestroMateriaAndAlumnos() {
+    this.firebaseSvc.getMaestroByEmail(this.user.email).subscribe((maestro: any) => {
+      if (maestro && maestro.materiaId) {
+        this.materiaId = maestro.materiaId;
+        this.getAlumnosByMateria();
+      } else {
+        console.log("No se encontró la materia del maestro.");
+        this.loading = false;
+      }
+    });
   }
 
 
-  //============= Agregar o Actualizar alumnos====================
+  async getMaestroMateria() {
+    this.firebaseSvc.getMaestroByEmail(this.user.email).subscribe((maestro: any) => {
+      if (maestro && maestro.materiaId) {
+        this.materiaId = maestro.materiaId;
+        this.getAlumnosByMateria(); // Obtener alumnos de la materia del docente
+      } else {
+        console.log("No se encontró la materia del maestro.");
+        this.loading = false;
+      }
+    });
+  }
 
+  async getAlumnosByMateria() {
+    this.loading = true;
+    this.firebaseSvc.getAlumnosByMateria(this.materiaId).subscribe({
+      next: (res: any) => {
+        console.log(res);
+        this.alumnos = res;
+        this.loading = false;
+      },
+      error: (error: any) => {
+        console.log("Error al obtener alumnos:", error);
+        this.loading = false;
+      }
+    });
+  }
+
+  isAlumnoInMaestroMateria(alumno: Alumnos): boolean {
+    // Verificar si el usuario es un docente y tiene una materia asociada
+    if (this.userRole === 'Docente' && this.materiaId) {
+      // Comprobar si el ID de la materia del alumno coincide con el ID de la materia del docente
+      return alumno.materiaId === this.materiaId;
+    }
+    // Si el usuario no es un docente o no tiene una materia asociada, devolver false
+    return false;
+  }
+  
   async AddUpdateAlumnos(alumnos?: Alumnos) {
     let success = await this.utilsSvc.presentModal({
       component: AddUpdateAlumnosComponent,
       cssClass: 'add-update-modal',
       componentProps: {alumnos}
-    })
-
-
-    if (success) this.getAlumnos();
+    });
+    
+    if (success) {
+      if (this.userRole === 'Docente' && this.materiaId) {
+        this.getAlumnosByMateria(); // Obtener alumnos de la materia del docente
+      } else {
+        this.getAlumnos(); // Obtener todos los alumnos
+      }
+    }
   }
-
-
   ionViewWillEnter() {
     this.getAlumnos();
   }
 
-  // Función para abrir el detalle del cultivo seleccionado
   async alumnosDetail(alumno?: Alumnos) {
     let success = await this.utilsSvc.presentModal({
       component: AlumnosDetailComponent,
-      cssClass: 'alumnos-detal-modal',
-      componentProps: {alumno} // Pasa el cultivo específico al modal
+      cssClass: 'alumnos-detail-modal',
+      componentProps: {alumno}
     });
 
     if (success) this.getAlumnos();
   }
 
-  //================== Obtener Productos=====================
-  getAlumnos() {
-    let path = `/Alumnos`;
-
+  async getAlumnos() {
     this.loading = true;
-
-    let sub = this.firebaseSvc.getCollectionData(path).subscribe({
+    const path = '/Alumnos'; // Obtener todos los alumnos sin ninguna condición adicional
+    this.firebaseSvc.getCollectionData(path).subscribe({
       next: (res: any) => {
         console.log(res);
         this.alumnos = res;
-
         this.loading = false;
-
-        sub.unsubscribe();
+      },
+      error: (error: any) => {
+        console.log("Error al obtener alumnos:", error);
+        this.loading = false;
       }
-    })
-
+    });
   }
+ 
+  
+
+  async deleteAlumnos(alumnos: Alumnos) {
+    const path = `/Alumnos/${alumnos.aid}`;
+    const loading = await this.utilsSvc.loading();
+    await loading.present();
+  
+    this.firebaseSvc.deleteDocument(path).then(async res => {
+      if (this.userRole === 'Docente' && this.materiaId) {
+        this.getAlumnosByMateria(); // Obtener alumnos de la materia del docente
+      } else {
+        this.getAlumnos(); // Obtener todos los alumnos
+      }
+      this.utilsSvc.presentToast({
+        message: 'Maestro eliminado exitosamente',
+        duration: 1500,
+        color: 'success',
+        position: 'middle',
+        icon: 'checkmark-circle-outline'
+      });
+    }).catch(error => {
+      console.log("error");
+      this.utilsSvc.presentToast({
+        message: error.message,
+        duration: 2500,
+        color: 'primary',
+        position: 'middle',
+        icon: 'alert-circle-outline'
+      });
+    }).finally(() => {
+      loading.dismiss();
+    });
+  }
+  
+
 
   async confirmDeleteAlumnos(alumnos: Alumnos) {
     this.utilsSvc.presentAlert({
@@ -90,64 +183,12 @@ export class Pagina4Page implements OnInit {
         }, {
           text: 'Sí, eliminar',
           handler: () => {
-            this.deleteAlumnos(alumnos)
+            this.deleteAlumnos(alumnos);
           }
         }
       ]
     });
-
   }
 
-  //==================== Eliminar Producto ======================
-  async deleteAlumnos(alumnos: Alumnos) {
-
-    let path = `/Alumnos/${alumnos.aid}`
-
-    const loading = await this.utilsSvc.loading();
-    await loading.present();
-
-    this.firebaseSvc.deleteDocument(path).then(async res => {
-
-      this.alumnos = this.alumnos.filter(a => a.aid !== alumnos.aid);
-
-      this.utilsSvc.presentToast({
-        message: 'Maestro eliminado exitosamente',
-        duration: 1500,
-        color: 'success',
-        position: 'middle',
-        icon: 'checkmark-circle-outline'
-      })
-
-
-
-
-    }).catch(error => {
-      console.log("error");
-
-      this.utilsSvc.presentToast({
-        message: error.message,
-        duration: 2500,
-        color: 'primary',
-        position: 'middle',
-        icon: 'alert-circle-outline'
-      })
-
-    }).finally(() => {
-      loading.dismiss();
-    })
-
-  }
-
-
-  getUserRole() {
-    this.firebaseSvc.getCurrentUserWithRole().subscribe((user: User) => {
-      if (user) {
-        // Suponemos que 'user.role' es el campo que contiene el rol del usuario en Firestore
-        this.userRole = user.role;
-      }
-    });
-  }
-
+  
 }
-
-

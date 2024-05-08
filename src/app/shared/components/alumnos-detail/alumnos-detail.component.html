@@ -5,17 +5,17 @@
 <ion-content class="ion-padding">
   <ion-card class="maestros-card" *ngIf="alumno">
     <ion-card-header>
-      <ion-card-title>{{ alumno.carnet }}</ion-card-title>
+      <ion-card-title>{{ alumno.name }}</ion-card-title>
     </ion-card-header>
 
     <div class="maestro-box">
       <ion-label class="label">Apellido:</ion-label>
-      <ion-text class="data">{{ alumno.name }}</ion-text>
+      <ion-text class="data">{{ alumno.apellido }}</ion-text>
     </div>
 
     <div class="maestro-box">
       <ion-label class="label">Carnet:</ion-label>
-      <ion-text class="data">{{ alumno.apellido }}</ion-text>
+      <ion-text class="data">{{ alumno.carnet }}</ion-text>
     </div>
 
     <div class="maestro-box">
@@ -59,5 +59,11 @@
       <ion-label class="label">Materia:</ion-label>
       <ion-text class="data">{{ getMateriaNombre(alumno.materiaId) }}</ion-text> <!-- Muestra el nombre de la materia -->
     </div>
+
+    <div class="maestro-box">
+      <ion-label class="label">Maestro:</ion-label>
+      <ion-text class="data">{{ getMaestroNombre(alumno.maestroId) }}</ion-text>
+    </div>
+    
   </ion-card>
 </ion-content>

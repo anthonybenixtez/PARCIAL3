@@ -26,9 +26,13 @@
     <ion-item-options>
 
         <!--=========== Editar Cultivo =============-->
-      <ion-item-option *ngIf="utilsSvc.shouldShowElementForRole('Administrador', userRole)" (click)="AddUpdateAlumnos(a)">
-        <ion-icon class="option-btn" name="create-outline"></ion-icon>
-      </ion-item-option>
+
+      <!-- Permitir edición para docentes y administradores -->
+      <ng-container *ngIf="userRole === 'Docente' && isAlumnoInMaestroMateria(a) || userRole === 'Administrador'">
+        <ion-item-option (click)="AddUpdateAlumnos(a)">
+          <ion-icon class="option-btn" name="create-outline"></ion-icon>
+        </ion-item-option>
+      </ng-container>
 
                   <!--=========== Eliminar Cultivo =============-->          
       <ion-item-option *ngIf="utilsSvc.shouldShowElementForRole('Administrador', userRole)" (click)="confirmDeleteAlumnos(a)" color="danger">

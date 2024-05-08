@@ -14,15 +14,17 @@ export class AlumnosDetailComponent  implements OnInit {
   materias: any[];
   maestros: any[];
   materiaSeleccionada: any; // Declaración de la propiedad materiaSeleccionada
-  maestroSeleccionado: any; // Declaración de la propiedad materiaSeleccionada
-
-
+  maestroSeleccionado: any; // Declaración de la propiedad maestroSeleccionado
 
   constructor(private firebaseSvc: FirebaseService, private utilsSvc: UtilsService) { }
 
   ngOnInit() {
     this.firebaseSvc.getMaterias().subscribe((materias) => {
       this.materias = materias;
+    });
+
+    this.firebaseSvc.getMaestros().subscribe((maestros) => {
+      this.maestros = maestros;
     });
   }
 
@@ -48,13 +50,12 @@ export class AlumnosDetailComponent  implements OnInit {
     return materia ? materia.name : "Materia no encontrada";
   }
 
-
   onSelectMaestro(event: any) {
-    const selectedMaestroId = event.detail?.value; // Uso de `event.detail.value` para obtener el valor seleccionado
+    const selectedMaestroId = event.detail?.value;
     if (selectedMaestroId) {
-      this.maestroSeleccionado = this.materias.find((maestro) => maestro.aid === selectedMaestroId); // Compara con `aid`
+      this.maestroSeleccionado = this.maestros.find((maestro) => maestro.aid === selectedMaestroId);
       if (!this.maestroSeleccionado) {
-        console.warn('Maestro no encontrada con ID:', selectedMaestroId);
+        console.warn('Maestro no encontrado con ID:', selectedMaestroId);
       }
     } else {
       console.warn('Evento de selección no válido:', event);
@@ -66,11 +67,8 @@ export class AlumnosDetailComponent  implements OnInit {
       return "ID inválido";
     }
   
-    const maestro = this.maestros.find((m) => m.aid === maestroId); // Asegúrate de comparar con la propiedad correcta
+    const maestro = this.maestros.find((m) => m.aid === maestroId);
   
-    return maestro ? maestro.name : "Materia no encontrada";
+    return maestro ? maestro.name : "Maestro no encontrado";
   }
-  
-  
-  
 }

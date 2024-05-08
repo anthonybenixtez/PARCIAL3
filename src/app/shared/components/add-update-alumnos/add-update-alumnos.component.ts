@@ -80,7 +80,11 @@ export class AddUpdateAlumnosComponent  implements OnInit {
     });
   }
   
-
+    // Función para verificar si se debe mostrar u ocultar un elemento según el rol del usuario
+    public shouldShowElementForRole(role: string, userRole: string): boolean {
+      return role === userRole;
+    }
+    
   submit() {
     if (this.form.valid) {
       if (this.alumnos) {
@@ -92,9 +96,9 @@ export class AddUpdateAlumnosComponent  implements OnInit {
   }
 
 
-   ////////// CREAR Maestros /////////////
+   ////////// CREAR Alumnos /////////////
    async createAlumnos() {
-    const path = `/Alumnos`; // Ruta en la base de datos para guardar maestros
+    const path = `/Alumnos`; // Ruta en la base de datos para guardar alumnos
     const loading = await this.utilsSvc.loading();
     await loading.present(); // Muestra el indicador de carga
   
@@ -106,7 +110,7 @@ export class AddUpdateAlumnosComponent  implements OnInit {
     const maestroId = this.form.get('maestroId').value;
 
   
-    // Crea el objeto de datos para el nuevo maestro
+    // Crea el objeto de datos para el nuevo alumno
     const newAlumnos = {
       ...this.form.value, // Copia todos los valores del formulario
       materiaId: materiaId,
@@ -114,7 +118,7 @@ export class AddUpdateAlumnosComponent  implements OnInit {
        // Asegúrate de incluir `materiaId`
     };
   
-    this.firebaseSvc.addDocument(path, newAlumnos) // Guarda el nuevo maestro en Firebase
+    this.firebaseSvc.addDocument(path, newAlumnos) // Guarda el nuevo alumno en Firebase
       .then(async () => {
         this.utilsSvc.dismissModal({ success: true }); // Cierra el modal si es necesario
   
@@ -141,7 +145,7 @@ export class AddUpdateAlumnosComponent  implements OnInit {
       });
   }
   
-//==================== Actualizar Producto ======================
+//==================== Actualizar Alumnos ======================
 async updateAlumnos() {
 
 
@@ -190,6 +194,17 @@ onSelectMateria(event: any) {
     console.warn('No se seleccionó ninguna materia');
   }
 }
+
+onSelectMaestro(event: any) {
+  const selectedMaestroId = event.detail?.value;
+  if (selectedMaestroId) {
+    this.form.get('maestroId').setValue(selectedMaestroId);
+  } else {
+    console.warn('No se seleccionó ningún maestro');
+  }
+}
+
+
 getEstadoPromedio(promedio: number): string {
   return promedio >= 6 ? 'Aprobado' : 'Reprobado';
 }
