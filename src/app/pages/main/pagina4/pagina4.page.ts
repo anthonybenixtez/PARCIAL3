@@ -1,11 +1,11 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { FirebaseService } from 'src/app/services/firebase.service';
-import { UtilsService } from 'src/app/services/utils.service';
 import { AddUpdateAlumnosComponent } from 'src/app/shared/components/add-update-alumnos/add-update-alumnos.component';
 import { AlumnosDetailComponent } from 'src/app/shared/components/alumnos-detail/alumnos-detail.component';
 import { User } from 'src/app/models/user.model'; // Asegúrate de importar el modelo de usuario aquí
 import { Alumnos } from 'src/app/models/alumnos.model';
+import { FirebaseService } from 'src/app/services/firebase.service';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-pagina4',
@@ -101,14 +101,14 @@ export class Pagina4Page implements OnInit {
   //==================== Eliminar Producto ======================
   async deleteAlumnos(alumnos: Alumnos) {
 
-    let path = `/Alumnos/${alumnos.eid}`
+    let path = `/Alumnos/${alumnos.aid}`
 
     const loading = await this.utilsSvc.loading();
     await loading.present();
 
     this.firebaseSvc.deleteDocument(path).then(async res => {
 
-      this.alumnos = this.alumnos.filter(a => a.eid !== alumnos.eid);
+      this.alumnos = this.alumnos.filter(a => a.aid !== alumnos.aid);
 
       this.utilsSvc.presentToast({
         message: 'Maestro eliminado exitosamente',

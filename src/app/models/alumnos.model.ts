@@ -1,5 +1,5 @@
 export interface Alumnos {
-    eid:string;
+    aid:string;
     carnet:string;
     name:string;
     apellido:string;

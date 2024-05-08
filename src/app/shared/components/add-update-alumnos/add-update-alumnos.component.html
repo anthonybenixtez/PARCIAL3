@@ -88,12 +88,6 @@
       </ion-select>
     </ion-item>
 
-    <ion-item>
-      <ion-label>Materia</ion-label>
-      <ion-select formControlName="maestroId" (ionChange)="onSelectMaestro($event)">
-        <ion-select-option *ngFor="let m of maestros" [value]="m.aid">{{ m.name }}</ion-select-option>
-      </ion-select>
-    </ion-item>
 
     <!-- Botón de Envío -->
     <ion-button mode="ios" class="ion-margin" type="submit" [disabled]="form.invalid">

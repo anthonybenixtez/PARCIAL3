@@ -15,7 +15,7 @@ export class AddUpdateAlumnosComponent  implements OnInit {
 
   //ponemos los campos de maestros en un grupo
   form = new FormGroup({
-    eid: new FormControl(''),
+    aid: new FormControl(''),
     carnet: new FormControl('', [Validators.required, Validators.minLength(1)]),
     name: new FormControl('', [Validators.required, Validators.minLength(4)]),
     apellido: new FormControl('', [Validators.required, Validators.minLength(4)]),
@@ -43,7 +43,7 @@ export class AddUpdateAlumnosComponent  implements OnInit {
   ngOnInit(): void {
     if (this.alumnos) {
       this.form.setValue({
-        eid: this.alumnos.eid,
+        aid: this.alumnos.aid,
         carnet: this.alumnos.carnet,
         name: this.alumnos.name,
         apellido: this.alumnos.apellido,
@@ -83,7 +83,7 @@ export class AddUpdateAlumnosComponent  implements OnInit {
     await loading.present(); // Muestra el indicador de carga
   
     // Elimina `aid` si no es necesario para la creación
-    delete this.form.value.eid;
+    delete this.form.value.aid;
   
     // Obtén el valor de `materiaId` desde el `FormGroup`
     const materiaId = this.form.get('materiaId').value;
@@ -129,12 +129,12 @@ export class AddUpdateAlumnosComponent  implements OnInit {
 async updateAlumnos() {
 
 
-  let path =`/Alumnos/${this.alumnos.eid}`
+  let path =`/Alumnos/${this.alumnos.aid}`
 
   const loading = await this.utilsSvc.loading();
   await loading.present();
 
-  delete this.form.value.eid;
+  delete this.form.value.aid;
 
 
   this.firebaseSvc.updateDocument(path, this.form.value).then(async res => {
@@ -166,7 +166,6 @@ async updateAlumnos() {
   })
 
 }
-
 onSelectMateria(event: any) {
   const selectedMateriaId = event.detail?.value; // Acceder a `detail.value` para obtener el ID seleccionado
   if (selectedMateriaId) {
@@ -176,13 +175,5 @@ onSelectMateria(event: any) {
   }
 }
 
-onSelectMaestro(event: any) {
-  const selectedMaestroId = event.detail?.value; // Acceder a `detail.value` para obtener el ID seleccionado
-  if (selectedMaestroId) {
-    this.form.get('maestroId').setValue(selectedMaestroId); // Asignar el ID al `FormGroup`
-  } else {
-    console.warn('No se seleccionó ningun maestro');
-  }
-}
 }
 
