@@ -2,10 +2,11 @@
 
 
 <ion-content>
-  <ion-button *ngIf="utilsSvc.shouldShowElementForRole('Administrador', userRole)" expand="block" fill="clear" shape="round">
+  <ion-button *ngIf="utilsSvc.shouldShowElementForRole('Administrador', userRole)" expand="block" fill="solid" shape="round" color="primary" size="small" class="custom-button">
     Botón para Administrador
   </ion-button>
-  <ion-button *ngIf="utilsSvc.shouldShowElementForRole('Docente', userRole)" expand="block" fill="clear" shape="round">
+  <ion-button *ngIf="utilsSvc.shouldShowElementForRole('Docente', userRole)" expand="block" fill="solid" shape="round" color="secondary" size="small" class="custom-button">
     Botón para Docente
   </ion-button>
 </ion-content>
+
