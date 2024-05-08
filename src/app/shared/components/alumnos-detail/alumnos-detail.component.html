@@ -46,10 +46,13 @@
       <ion-label class="label">Nota 4:</ion-label>
       <ion-text class="data">{{ alumno.nota4 }}</ion-text>
     </div>
-
+    
     <div class="maestro-box">
       <ion-label class="label">Promedio:</ion-label>
-      <ion-text class="data">{{ alumno.promedio }}</ion-text> <!-- Muestra el promedio -->
+      <ion-text class="data">{{ alumno.promedio }}</ion-text>
+      <ion-text *ngIf="alumno.promedio !== null" [color]="alumno.promedio >= 6 ? 'success' : 'danger'">
+        {{ alumno.promedio >= 6 ? 'Aprobado' : 'Reprobado' }}
+      </ion-text>
     </div>
 
     <div class="maestro-box">

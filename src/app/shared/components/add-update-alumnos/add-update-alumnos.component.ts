@@ -25,10 +25,10 @@ export class AddUpdateAlumnosComponent  implements OnInit {
     apellido: new FormControl('', [Validators.required, Validators.minLength(4)]),
     email: new FormControl('', [Validators.required, Validators.minLength(4)]), 
     ciclo: new FormControl(null, [Validators.required, Validators.min(0)]),
-    nota1: new FormControl(null, [Validators.required, Validators.min(0)]),
-    nota2: new FormControl(null, [Validators.required, Validators.min(0)]),
-    nota3: new FormControl(null, [Validators.required, Validators.min(0)]),
-    nota4: new FormControl(null, [Validators.required, Validators.min(0)]),
+    nota1: new FormControl(null, [Validators.required, Validators.min(0), Validators.max(10)]),
+    nota2: new FormControl(null, [Validators.required, Validators.min(0), Validators.max(10)]),
+    nota3: new FormControl(null, [Validators.required, Validators.min(0), Validators.max(10)]),
+    nota4: new FormControl(null, [Validators.required, Validators.min(0), Validators.max(10)]),
     promedio: new FormControl(null, [Validators.required, Validators.min(0)]), 
     materiaId: new FormControl(''),
     maestroId: new FormControl(''),
@@ -51,6 +51,7 @@ export class AddUpdateAlumnosComponent  implements OnInit {
         );
         this.form.patchValue({ promedio }, { emitEvent: false });
     });
+    
 
     if (this.alumnos) {
       this.form.setValue({
@@ -78,6 +79,7 @@ export class AddUpdateAlumnosComponent  implements OnInit {
       this.maestros = maestros;
     });
   }
+  
 
   submit() {
     if (this.form.valid) {
@@ -117,7 +119,7 @@ export class AddUpdateAlumnosComponent  implements OnInit {
         this.utilsSvc.dismissModal({ success: true }); // Cierra el modal si es necesario
   
         this.utilsSvc.presentToast({
-          message: 'Maestro creado exitosamente',
+          message: 'Alumno creado exitosamente',
           duration: 1500,
           color: 'success',
           position: 'middle',
@@ -125,10 +127,10 @@ export class AddUpdateAlumnosComponent  implements OnInit {
         });
       })
       .catch((error) => {
-        console.error('Error creando maestro:', error); // Manejo de errores
+        console.error('Error creando alumno:', error); // Manejo de errores
   
         this.utilsSvc.presentToast({
-          message: 'Error creando maestro',
+          message: 'Error creando alumno',
           duration: 2500,
           color: 'danger', // Color de alerta para indicar error
           icon: 'alert-circle-outline', // Icono para indicar error
@@ -156,7 +158,7 @@ async updateAlumnos() {
     this.utilsSvc.dismissModal({ successs: true});
 
     this.utilsSvc.presentToast({
-      message: 'Producto actualizado exitosamente',
+      message: 'Alumno actualizado exitosamente',
       duration: 1500,
       color: 'success',
       position: 'middle',
@@ -188,6 +190,36 @@ onSelectMateria(event: any) {
     console.warn('No se seleccionó ninguna materia');
   }
 }
+getEstadoPromedio(promedio: number): string {
+  return promedio >= 6 ? 'Aprobado' : 'Reprobado';
+}
+checkPromedio1(event: any) {
+  const inputValue = parseFloat(event.target.value);
+  if (inputValue > 10) {
+    this.form.controls['nota1'].setValue(10);// Establecer el valor máximo permitido
+
+  }
 
 }
+checkPromedio2(event: any) {
+  const inputValue = parseFloat(event.target.value);
+  if (inputValue > 10) {
+    this.form.controls['nota2'].setValue(10);// Establecer el valor máximo permitido
 
+  }
+}
+checkPromedio3(event: any) {
+  const inputValue = parseFloat(event.target.value);
+  if (inputValue > 10) {
+    this.form.controls['nota3'].setValue(10);// Establecer el valor máximo permitido
+
+  }
+}
+checkPromedio4(event: any) {
+  const inputValue = parseFloat(event.target.value);
+  if (inputValue > 10) {
+    this.form.controls['nota4'].setValue(10);// Establecer el valor máximo permitido
+
+  }
+}
+}
