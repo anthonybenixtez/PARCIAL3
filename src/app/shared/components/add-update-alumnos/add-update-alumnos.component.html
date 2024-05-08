@@ -73,12 +73,18 @@
     </div>
 
     <!-- Promedio -->
-    <app-custom-input autocomplete="promedio" [control]="form.controls.promedio" type="number"
-      label="Promedio"></app-custom-input>
-    <div class="validators" *ngIf="form.controls.promedio.errors && form.controls.promedio.touched">
-      <div *ngIf="form.controls.promedio.errors['required']">Este campo es necesario</div>
-      <div *ngIf="form.controls.promedio.errors['min']">El valor debe ser mayor o igual a 0</div>
-    </div>
+ <!-- Promedio -->
+ <app-custom-input autocomplete="promedio" [control]="form.controls.promedio" type="text"
+ label="Promedio">
+ <ng-template #inputTemplate>
+   <input [formControl]="form.controls.promedio" type="number" step="0.01" />
+ </ng-template>
+</app-custom-input>
+   <div class="validators" *ngIf="form.controls.promedio.errors && form.controls.promedio.touched">
+     <div *ngIf="form.controls.promedio.errors['required']">Este campo es necesario</div>
+     <div *ngIf="form.controls.promedio.errors['min']">El valor debe ser mayor o igual a 0</div>
+   </div>
+
 
     <!-- Select de Materias -->
     <ion-item>

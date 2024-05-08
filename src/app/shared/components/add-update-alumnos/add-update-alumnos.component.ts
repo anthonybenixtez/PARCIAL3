@@ -4,43 +4,54 @@ import { Alumnos } from 'src/app/models/alumnos.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
 
+// Función para calcular el promedio
+function calcularPromedio(nota1: number, nota2: number, nota3: number, nota4: number): number {
+    const promedio = ((nota1 * 0.2) + (nota2 * 0.2) + (nota3 * 0.2) + (nota4 * 0.4)) ;
+    return parseFloat(promedio.toFixed(2));
+}
+
 @Component({
   selector: 'app-add-update-alumnos',
   templateUrl: './add-update-alumnos.component.html',
   styleUrls: ['./add-update-alumnos.component.scss'],
 })
 export class AddUpdateAlumnosComponent  implements OnInit {
+  @Input() alumnos: Alumnos;
 
- @Input() alumnos: Alumnos; //importamos nuestro models de maestros
-
-  //ponemos los campos de maestros en un grupo
   form = new FormGroup({
     aid: new FormControl(''),
     carnet: new FormControl('', [Validators.required, Validators.minLength(1)]),
     name: new FormControl('', [Validators.required, Validators.minLength(4)]),
     apellido: new FormControl('', [Validators.required, Validators.minLength(4)]),
-    email: new FormControl('', [Validators.required, Validators.minLength(4)]), // Usa `Validators.email` para validar correos electrónicos
-    ciclo: new FormControl(null, [Validators.required,Validators.min(0)]),
-    nota1: new FormControl(null, [Validators.required,Validators.min(0)]), // Usa 0 como valor inicial para números
-    nota2: new FormControl(null, [Validators.required,Validators.min(0)]),
-    nota3: new FormControl(null, [Validators.required,Validators.min(0)]),
-    nota4: new FormControl(null, [Validators.required,Validators.min(0)]),
-    promedio: new FormControl(null, [Validators.required, Validators.min(0)]), // Usa validaciones para números
+    email: new FormControl('', [Validators.required, Validators.minLength(4)]), 
+    ciclo: new FormControl(null, [Validators.required, Validators.min(0)]),
+    nota1: new FormControl(null, [Validators.required, Validators.min(0)]),
+    nota2: new FormControl(null, [Validators.required, Validators.min(0)]),
+    nota3: new FormControl(null, [Validators.required, Validators.min(0)]),
+    nota4: new FormControl(null, [Validators.required, Validators.min(0)]),
+    promedio: new FormControl(null, [Validators.required, Validators.min(0)]), 
     materiaId: new FormControl(''),
     maestroId: new FormControl(''),
-
-
   });
-  
-  //importaciones a utilizar
 
-  firebaseSvc= inject(FirebaseService);
-  utilsSvc= inject(UtilsService)
-  userRole: string = ''; // Aquí deberías obtener el rol del usuario
+  firebaseSvc = inject(FirebaseService);
+  utilsSvc = inject(UtilsService);
+  userRole: string = ''; 
   materias: any[];
   maestros: any[];
 
   ngOnInit(): void {
+    // Escucha cambios en las notas para recalcular el promedio
+    this.form.valueChanges.subscribe((values) => {
+        const promedio = calcularPromedio(
+            values.nota1 || 0,
+            values.nota2 || 0,
+            values.nota3 || 0,
+            values.nota4 || 0
+        );
+        this.form.patchValue({ promedio }, { emitEvent: false });
+    });
+
     if (this.alumnos) {
       this.form.setValue({
         aid: this.alumnos.aid,
@@ -55,26 +66,29 @@ export class AddUpdateAlumnosComponent  implements OnInit {
         nota4: this.alumnos.nota4,
         promedio: this.alumnos.promedio,
         materiaId: this.alumnos.materiaId || '',
-        maestroId: this.alumnos.maestroId || '', // Establece materiaId si existe
-         // Establece materiaId si existe
-   
+        maestroId: this.alumnos.maestroId || '',
       });
     }
+    
+    // Obtener las materias y maestros
     this.firebaseSvc.getMaterias().subscribe((materias) => {
-      this.materias = materias; // Obtenemos las materias para el select
+      this.materias = materias; 
     });
     this.firebaseSvc.getMaestros().subscribe((maestros) => {
       this.maestros = maestros;
     });
   }
 
-  submit(){
+  submit() {
     if (this.form.valid) {
-      if(this.alumnos) this.updateAlumnos();
-      else this.createAlumnos();
-    }   
+      if (this.alumnos) {
+        this.updateAlumnos();
+      } else {
+        this.createAlumnos();
+      }
+    }
   }
-  
+
 
    ////////// CREAR Maestros /////////////
    async createAlumnos() {

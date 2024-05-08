@@ -16,7 +16,8 @@
   <ion-item-sliding class="product-item" *ngFor="let a of alumnos">
     <ion-item (click)="alumnosDetail(a)">
       <ion-label class="ion-text-center">
-        <div class="name"><strong>{{a.name}}</strong></div>
+        <div class="name"><strong>{{a.name}} {{a.carnet}}</strong></div>
+
       </ion-label>
     </ion-item>
 
