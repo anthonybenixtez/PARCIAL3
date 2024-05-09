@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Alumnos } from 'src/app/models/alumnos.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
+import { HttpClient } from '@angular/common/http';
 
 // Función para calcular el promedio
 function calcularPromedio(nota1: number, nota2: number, nota3: number, nota4: number): number {
@@ -17,6 +18,9 @@ function calcularPromedio(nota1: number, nota2: number, nota3: number, nota4: nu
 })
 export class AddUpdateAlumnosComponent  implements OnInit {
   @Input() alumnos: Alumnos;
+  private emailJSPrivateKey = 'WLFI•••••••••••••••••';
+
+  constructor(private http: HttpClient) { }
 
   form = new FormGroup({
     aid: new FormControl(''),
@@ -147,45 +151,82 @@ export class AddUpdateAlumnosComponent  implements OnInit {
   
 //==================== Actualizar Alumnos ======================
 async updateAlumnos() {
-
-
-  let path =`/Alumnos/${this.alumnos.aid}`
-
+  let path = `/Alumnos/${this.alumnos.aid}`;
   const loading = await this.utilsSvc.loading();
   await loading.present();
 
   delete this.form.value.aid;
 
-
-  this.firebaseSvc.updateDocument(path, this.form.value).then(async res => {
-    
-    this.utilsSvc.dismissModal({ successs: true});
-
-    this.utilsSvc.presentToast({
-      message: 'Alumno actualizado exitosamente',
-      duration: 1500,
-      color: 'success',
-      position: 'middle',
-      icon: 'checkmark-circle-outline'
+  this.firebaseSvc.updateDocument(path, this.form.value)
+    .then(async res => {
+      // Obtén el email del alumno
+      const alumnoEmail = this.form.value.email;
+      
+      // Llama a la función para enviar el correo electrónico al email del alumno
+      this.sendEmailToAlumno(alumnoEmail);
+      
+      // Resto del código para manejar la actualización del alumno
+      this.utilsSvc.dismissModal({ successs: true });
+      this.utilsSvc.presentToast({
+        message: 'Alumno actualizado exitosamente',
+        duration: 1500,
+        color: 'success',
+        position: 'middle',
+        icon: 'checkmark-circle-outline'
+      });
     })
-
-
-  }).catch(error=>{
-    console.log("error");
-
-    this.utilsSvc.presentToast({
-      message: error.message,
-      duration: 2500,
-      color: 'primary',
-      position: 'middle',
-      icon: 'alert-circle-outline'
+    .catch(error => {
+      console.error("Error al actualizar alumno:", error);
+      this.utilsSvc.presentToast({
+        message: error.message,
+        duration: 2500,
+        color: 'primary',
+        position: 'middle',
+        icon: 'alert-circle-outline'
+      });
     })
-
-  }).finally(()=> {
-    loading.dismiss();
-  })
-
+    .finally(() => {
+      loading.dismiss();
+    });
 }
+
+// Función para enviar el correo electrónico al email del alumno
+sendEmailToAlumno(alumnoEmail: string) {
+  // Construye el cuerpo del correo electrónico con la información del alumno
+  const emailBody = `Estimado alumno,\n
+                    Tu información ha sido actualizada exitosamente.\n
+                    Saludos,\n
+                    Parcial 3`;
+
+  // Llama a la API de EmailJS para enviar el correo electrónico
+  // Utiliza tu clave privada de EmailJS en la solicitud HTTP
+  const emailJSUrl = 'https://api.emailjs.com/api/v1.0/email/send';
+  const emailData = {
+    service_id: 'service_r4yjxci',
+    template_id: 'template_5ik557g',
+    user_id: 'jGHB1ca8sZCf5Q0u9',
+    template_params: {
+      to_email: alumnoEmail, // Utiliza el email del alumno como el destinatario
+      alumno_email: alumnoEmail, // Pasa la dirección de correo electrónico del alumno como un parámetro
+      from_name: 'Parcial 3',
+      content: emailBody
+    }
+  };
+
+  // Envía el correo electrónico utilizando una solicitud HTTP POST
+  this.http.post(emailJSUrl, emailData)
+    .subscribe(
+      response => {
+        console.log("Correo electrónico enviado exitosamente:", response);
+      },
+      error => {
+        console.error("Error al enviar correo electrónico:", error);
+      }
+    );
+}
+
+
+
 onSelectMateria(event: any) {
   const selectedMateriaId = event.detail?.value; // Acceder a `detail.value` para obtener el ID seleccionado
   if (selectedMateriaId) {
