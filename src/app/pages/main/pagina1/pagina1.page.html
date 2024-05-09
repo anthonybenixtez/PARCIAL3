@@ -1,0 +1,66 @@
+<app-header [showMenu]="true" title="Materias"></app-header>
+
+
+<br>
+<br>
+
+<ion-content fullscreen="true">
+
+  <!-------- PRODUCTOS -------->
+<ion-list *ngIf="!loading">
+  <div class="data ion-text-center">
+    <strong>Materias:</strong>
+  </div>
+
+  <br>
+  <ion-item-sliding class="product-item" *ngFor="let m of materias">
+    <ion-item (click)="materiasDetail(m)">
+      <ion-label class="ion-text-center">
+        <div class="name"><strong>{{m.name}}</strong></div>
+      </ion-label>
+    </ion-item>
+
+          <!--=========== Opciones =============-->
+
+    <ion-item-options>
+
+        <!--=========== Editar Cultivo =============-->
+      <ion-item-option *ngIf="utilsSvc.shouldShowElementForRole('Administrador', userRole)" (click)="AddUpdateMaterias(m)">
+        <ion-icon class="option-btn" name="create-outline"></ion-icon>
+      </ion-item-option>
+
+                  <!--=========== Eliminar Cultivo =============-->          
+      <ion-item-option *ngIf="utilsSvc.shouldShowElementForRole('Administrador', userRole)" (click)="confirmDeleteMaterias(m)" color="danger">
+        <ion-icon class="option-btn" name="trash-outline"></ion-icon>
+      </ion-item-option>
+
+    </ion-item-options>
+
+
+  </ion-item-sliding>
+</ion-list>
+
+<!--------------CARGANDO------------------>
+
+<ion-list *ngIf="loading">
+    <ion-item class="product-item" *ngFor="let c of [1,1,1,1,1,1,1,1,1,1]">
+      <ion-avatar slot="start">
+<ion-skeleton-text animated style="width: 100%; height: 100%"></ion-skeleton-text>      </ion-avatar>
+      <ion-label class="ion-text-center">
+<ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+<ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+      </ion-label>
+    </ion-item>
+
+</ion-list>
+
+
+
+  <!--=========== Nuevo Cultivo =============-->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button *ngIf="utilsSvc.shouldShowElementForRole('Administrador', userRole)" (click)="AddUpdateMaterias()" color="success">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+

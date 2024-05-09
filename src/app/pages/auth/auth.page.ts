@@ -16,27 +16,21 @@ export class AuthPage implements OnInit {
     password: new FormControl('', [Validators.required])
   });
 
-  firebaseSvc= inject(FirebaseService);
-  utilsSvc= inject(UtilsService)
-
+  firebaseSvc = inject(FirebaseService);
+  utilsSvc = inject(UtilsService)
 
   ngOnInit() {
   }
 
-  async submit(){
-
+  async submit() {
     if (this.form.valid) {
-
       const loading = await this.utilsSvc.loading();
       await loading.present();
 
-      this.firebaseSvc.signIn(this.form.value as User).then(res =>{
-
+      this.firebaseSvc.signIn(this.form.value as User).then(res => {
         this.getUserInfo(res.user.uid);
-
-      }).catch(error=>{
+      }).catch(error => {
         console.log(error);
-
         this.utilsSvc.presentToast({
           message: error.message,
           duration: 2500,
@@ -44,16 +38,11 @@ export class AuthPage implements OnInit {
           position: 'middle',
           icon: 'alert-circle-outline'
         })
-
-
-      }).finally(()=> {
+      }).finally(() => {
         loading.dismiss();
       })
-
+    }
   }
-
-  }
-
 
   async getUserInfo(uid: string) {
     if (this.form.valid) {
@@ -63,9 +52,20 @@ export class AuthPage implements OnInit {
       let path = `users/${uid}`;
 
       this.firebaseSvc.getDocument(path).then((user: User) => {
-        
         this.utilsSvc.saveInLocalStorage('user', user);
-        this.utilsSvc.routerLink('/main/home');
+
+        // Buscar el maestro asociado por correo electrónico
+        this.firebaseSvc.getMaestroByEmail(user.email).subscribe((maestro) => {
+          // Asociar al usuario al maestro encontrado
+          if (maestro) {
+            this.utilsSvc.saveInLocalStorage('maestro', maestro);
+          } else {
+            console.log("No se encontró maestro asociado");
+          }
+        }, error => {
+          console.log("Error al buscar maestro:", error);
+        });
+
         this.form.reset();
 
         this.utilsSvc.presentToast({
@@ -76,8 +76,7 @@ export class AuthPage implements OnInit {
           icon: 'person-circle-outline'
         })
 
-
-      }).catch(error=>{
+      }).catch(error => {
         console.log("error");
 
         this.utilsSvc.presentToast({
@@ -88,11 +87,11 @@ export class AuthPage implements OnInit {
           icon: 'alert-circle-outline'
         })
 
-      }).finally(()=> {
+      }).finally(() => {
         loading.dismiss();
       })
 
     }
   }
-  
+
 }

@@ -5,6 +5,12 @@ import { HeaderComponent } from './components/header/header.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AddUpdateMateriasComponent } from './components/add-update-materias/add-update-materias.component';
+import { MateriasDetailComponent } from './components/materias-detail/materias-detail.component';
+import { MaestrosDetailComponent } from './components/maestros-detail/maestros-detail.component';
+import { AddUpdateMaestrosComponent } from './components/add-update-maestros/add-update-maestros.component';
+import { AddUpdateAlumnosComponent } from './components/add-update-alumnos/add-update-alumnos.component';
+import { AlumnosDetailComponent } from './components/alumnos-detail/alumnos-detail.component';
 
 
 
@@ -13,6 +19,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HeaderComponent,
     CustomInputComponent,
     LogoComponent,
+    AddUpdateMateriasComponent,
+    MateriasDetailComponent,
+    MaestrosDetailComponent,
+    AddUpdateMaestrosComponent,
+    AddUpdateAlumnosComponent,
+    AlumnosDetailComponent
     
   ],
   exports: [
@@ -20,7 +32,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CustomInputComponent,
     LogoComponent,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    AddUpdateMateriasComponent,
+    MateriasDetailComponent,
+    MaestrosDetailComponent,
+    AddUpdateMaestrosComponent,
+    AddUpdateAlumnosComponent,
+    AlumnosDetailComponent
   ],
   imports: [
     CommonModule,

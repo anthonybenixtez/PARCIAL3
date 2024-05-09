@@ -1,0 +1,69 @@
+<app-header [isAuth]="true"  [isModal]="true" title="Detalles de la Materia"></app-header>
+
+
+
+<ion-content class="ion-padding">
+  <ion-card class="maestros-card" *ngIf="alumno">
+    <ion-card-header>
+      <ion-card-title>{{ alumno.name }}</ion-card-title>
+    </ion-card-header>
+
+    <div class="maestro-box">
+      <ion-label class="label">Apellido:</ion-label>
+      <ion-text class="data">{{ alumno.apellido }}</ion-text>
+    </div>
+
+    <div class="maestro-box">
+      <ion-label class="label">Carnet:</ion-label>
+      <ion-text class="data">{{ alumno.carnet }}</ion-text>
+    </div>
+
+    <div class="maestro-box">
+      <ion-label class="label">Correo electrónico:</ion-label>
+      <ion-text class="data">{{ alumno.email }}</ion-text>
+    </div>
+    <div class="maestro-box">
+      <ion-label class="label">Ciclo:</ion-label>
+      <ion-text class="data">{{ alumno.ciclo }}</ion-text>
+    </div>
+
+    <div class="maestro-box">
+      <ion-label class="label">Nota 1:</ion-label>
+      <ion-text class="data">{{ alumno.nota1 }}</ion-text>
+    </div>
+
+    <div class="maestro-box">
+      <ion-label class="label">Nota 2:</ion-label>
+      <ion-text class="data">{{ alumno.nota2 }}</ion-text>
+    </div>
+
+    <div class="maestro-box">
+      <ion-label class="label">Nota 3:</ion-label>
+      <ion-text class="data">{{ alumno.nota3 }}</ion-text>
+    </div>
+
+    <div class="maestro-box">
+      <ion-label class="label">Nota 4:</ion-label>
+      <ion-text class="data">{{ alumno.nota4 }}</ion-text>
+    </div>
+    
+    <div class="maestro-box">
+      <ion-label class="label">Promedio:</ion-label>
+      <ion-text class="data">{{ alumno.promedio }}</ion-text>
+      <ion-text *ngIf="alumno.promedio !== null" [color]="alumno.promedio >= 6 ? 'success' : 'danger'">
+        {{ alumno.promedio >= 6 ? 'Aprobado' : 'Reprobado' }}
+      </ion-text>
+    </div>
+
+    <div class="maestro-box">
+      <ion-label class="label">Materia:</ion-label>
+      <ion-text class="data">{{ getMateriaNombre(alumno.materiaId) }}</ion-text> <!-- Muestra el nombre de la materia -->
+    </div>
+
+    <div class="maestro-box">
+      <ion-label class="label">Maestro:</ion-label>
+      <ion-text class="data">{{ getMaestroNombre(alumno.maestroId) }}</ion-text>
+    </div>
+    
+  </ion-card>
+</ion-content>

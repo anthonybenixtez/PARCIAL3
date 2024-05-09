@@ -4,13 +4,26 @@
     <ion-buttons slot="start">
       <!--======= Volver ========-->
       <ion-back-button *ngIf="backButton" [defaultHref]="backButton"></ion-back-button>
-         
+      <ion-menu-button *ngIf="showMenu" slot="start" menu="menu-content"></ion-menu-button>
+
+      
+    <!--======= Cerrar Modal ========-->
+
+    <ion-button (click)="dismissModal()" *ngIf="isModal">
+      <ion-icon name="close-circle-outline"></ion-icon>
+    </ion-button>
     </ion-buttons>
+
+
     <ion-title>
-      <strong>{{title}}</strong>
-      <div class="Admin">
-        A D M I N
+      <strong>{{ title }}</strong>
+      <div *ngIf="userRole === 'Administrador'" class="role-indicator">
+        ADMINISTRADOR
+      </div>
+      <div *ngIf="userRole === 'Docente'" class="role-indicator">
+        DOCENTE
       </div>
     </ion-title>
+
   </ion-toolbar>
 </ion-header>

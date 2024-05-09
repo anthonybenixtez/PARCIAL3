@@ -1,0 +1,28 @@
+ion-card {
+    gap: 20px; /* Espacio entre elementos dentro de la tarjeta */
+    padding: 20px; /* Espacio interno de la tarjeta */
+    border-radius: 10px;
+  }
+  
+  card-content {
+    margin-top: 20px; /* Margen superior para separar el contenido de la tarjeta */
+  }
+  
+  ion-content {
+    --padding-bottom: 70px;
+  }
+
+  ion-card-content {
+    text-align: justify;
+
+  }
+  .name {
+    font-family: Arial, sans-serif; /* Cambia la fuente */
+    font-size: 24px; /* Cambia el tamaño de la fuente */
+    color: #333; /* Cambia el color del texto */
+    padding: 20px; /* Añade espacio alrededor del texto */
+    border-radius: 10px; /* Redondea las esquinas */
+    background-color:#fbff00;  /* Cambia el color de fondo */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Añade sombra */
+}
+
