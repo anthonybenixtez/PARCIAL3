@@ -9,11 +9,15 @@ import { Pagina2PageRoutingModule } from './pagina2-routing.module';
 import { Pagina2Page } from './pagina2.page';
 import { SharedModule } from 'src/app/shared/shared.module';
 
+//Importacion de paginador
+import { NgxPaginationModule } from 'ngx-pagination';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    NgxPaginationModule, // Importa el módulo aquí
     Pagina2PageRoutingModule,
     SharedModule
   ],
