@@ -56,5 +56,12 @@
     .data {
       padding-left: 0; /* Elimina el padding para alineación vertical */
     }
+
+    .contenedor {
+      text-align: center;
+      display: inline-block;
+      width: 50%; /* O el ancho deseado */
+  margin: auto;
+    }
   }
   
