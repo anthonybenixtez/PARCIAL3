@@ -64,6 +64,23 @@
       <ion-label class="label">Maestro:</ion-label>
       <ion-text class="data">{{ getMaestroNombre(alumno.maestroId) }}</ion-text>
     </div>
+
+  <br>
+    
+  <!-- Botón de Envío -->
+
+  <div class="d-flex-center ion-text-center paginador">
+    <ion-button  (click)="createPDF2()" class="button button-solid button-medium">
+      <ion-icon slot="start" name="document-outline"></ion-icon>
+      Generar PDF
+    </ion-button>
+  </div>
+  
+  <br>
+  
+    
     
   </ion-card>
+
+
 </ion-content>

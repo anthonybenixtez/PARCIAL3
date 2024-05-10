@@ -33,7 +33,11 @@
     "ionicons": "^7.0.0",
     "mongoose-paginate-v2": "^1.8.0",
     "ngx-extended-pdf-viewer": "^20.0.1",
+<<<<<<< HEAD
     "ngx-pagination": "^6.0.3",
+=======
+    "pdfmake": "^0.2.10",
+>>>>>>> dc4b85812b4d5e063584ba1cb22c705562f23ef8
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"
