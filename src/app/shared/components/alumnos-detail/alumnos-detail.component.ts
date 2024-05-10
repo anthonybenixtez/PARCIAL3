@@ -97,58 +97,41 @@ export class AlumnosDetailComponent  implements OnInit {
 
   let estado = this.alumno.promedio > 7 ? 'aprobado' : 'reprobado';
 
-  const content = [
-    { text: 'Reporte de notas', style: 'header' },
-    { text: `Carnet: ${this.alumno.carnet}`, style: 'subheader' },
-    { text: `Alumno: ${this.alumno.name} ${this.alumno.apellido}`, style: 'subheader' },
-    { text: `Profesor: ${this.getMaestroNombre(this.alumno.maestroId)}`, style: 'subheader' },
-    { text: `Ciclo: ${this.alumno.ciclo}`, style: 'subheader' },
-    { text: `Materia: ${this.getMateriaNombre(this.alumno.materiaId)}`, style: 'subheader2' },
-    { text: ''},
-    {
-      table: {
-        headerRows: 1,
-        widths: ['*', '*', '*', '*', '*'],
-        body: [
-          ['Parcial I', 'Parcial II', 'Parcial III', 'Parcial IV', 'Promedio'],
-          [this.alumno.nota1.toString(), this.alumno.nota2.toString(), this.alumno.nota3.toString(), this.alumno.nota4.toString(), this.alumno.promedio.toString()]
-        ]
+  const documentDefinition = {
+    content: [
+      { text: 'Reporte de notas', style: 'header' },
+      { text: `Carnet: ${this.alumno.carnet}`, style: 'subheader' },
+      { text: `Alumno: ${this.alumno.name} ${this.alumno.apellido}`, style: 'subheader' },
+      { text: `Materia: ${this.getMateriaNombre(this.alumno.materiaId)}`, style: 'subheader' },
+      { text: '' },
+      {
+        table: {
+          headerRows: 1,
+          widths: ['*', '*', '*', '*', '*'],
+          body: [
+            ['Parcial I', 'Parcial II', 'Parcial III', 'Parcial IV', 'Promedio'],
+            [this.alumno.nota1.toString(), this.alumno.nota2.toString(), this.alumno.nota3.toString(), this.alumno.nota4.toString(), this.alumno.promedio.toString()]
+          ]
+        }
+      },
+      { text: `Estado: ${estado}`, style: 'subheader' } // Aquí se usa la variable estado
+    ],
+    styles: {
+      header: {
+        fontSize: 20,
+        bold: true,
+        alignment: 'center',
+        margin: [0, 0, 0, 20],
+      },
+      subheader: {
+        fontSize: 14,
+        bold: true,
+        margin: [0, 0, 0, 5]
       }
-    },
-    { text: `Estado: ${estado}`, style: 'subheader3' }
-  ];
-
-  // Definir estilos
-  const styles = {
-    header: {
-      fontSize: 20,
-      bold: true,
-      alignment: 'center',
-      margin: [0, 0, 0, 20],
-    },
-    subheader: {
-      fontSize: 14,
-      bold: true,
-      margin: [0, 0, 0, 5]
-    },
-    subheader2: {
-      fontSize: 14,
-      bold: true,
-      margin: [0, 0, 0, 20]
-    },
-    subheader3: {
-      fontSize: 14,
-      alignment: 'center',
-      bold: true,
-      margin: [20, 20, 20, 20]
     }
   };
+  
 
-  // Definir el documento PDF
-  const documentDefinition = {
-    content,
-    styles
-  };
 
   // Crear y abrir el PDF
   pdfMake.createPdf(documentDefinition).open();

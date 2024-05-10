@@ -12,6 +12,9 @@ import { AppRoutingModule } from './app-routing.module';
 import {AngularFireModule} from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
 
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+
 
 @NgModule({
   declarations: [AppComponent],

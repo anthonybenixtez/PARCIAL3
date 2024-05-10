@@ -194,7 +194,7 @@ async updateAlumnos() {
 sendEmailToAlumno(alumnoEmail: string) {
   // Construye el cuerpo del correo electrónico con la información del alumno
   const emailBody = `Estimado alumno,\n
-                    Tu información ha sido actualizada exitosamente.\n
+                    Se han actualizado tus notas.\n
                     Saludos,\n
                     Parcial 3`;
 
