@@ -13,6 +13,8 @@ import { UtilsService } from 'src/app/services/utils.service';
   styleUrls: ['./pagina4.page.scss'],
 })
 export class Pagina4Page implements OnInit {
+
+  page: number; // Variable para controlar la página actual
   constructor(
     private modalController: ModalController,
     private firebaseSvc: FirebaseService,

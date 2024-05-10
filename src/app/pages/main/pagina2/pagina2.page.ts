@@ -14,9 +14,13 @@ import { Maestros } from 'src/app/models/maestros.model';
 })
 export class Pagina2Page implements OnInit {
 
- firebaseSvc = inject(FirebaseService);
+  page: number; // Variable para controlar la página actual
+
+  firebaseSvc = inject(FirebaseService);
   utilsSvc = inject(UtilsService)
   constructor(private modalController: ModalController) { }
+
+
 
   loading: boolean = false;
   maestros: Maestros[] = [];

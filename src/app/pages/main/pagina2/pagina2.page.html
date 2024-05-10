@@ -13,7 +13,7 @@
   </div>
 
   <br>
-  <ion-item-sliding class="product-item" *ngFor="let m of maestros">
+  <ion-item-sliding class="product-item" *ngFor="let m of maestros | paginate: { itemsPerPage: 2, currentPage: page }">
     <ion-item (click)="maestrosDetail(m)">
       <ion-label class="ion-text-center">
         <div class="name"><strong>{{m.name}}</strong></div>
@@ -62,5 +62,11 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
+  <!-- Paginador -->
+  <div class="ion-text-center">
+  <pagination-controls (pageChange)="page = $event" previouslabel="Anterior" nextlabel="Siguiente"></pagination-controls>
+  </div>
 </ion-content>
+
 
