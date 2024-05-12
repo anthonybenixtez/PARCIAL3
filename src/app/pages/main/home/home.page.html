@@ -1,32 +1,30 @@
-<app-header [showMenu]="true" title="Inicio"></app-header>
+<app-header [showMenu]="true" title="Inicio"></app-header> <!-- Componente de encabezado de la aplicación con título "Inicio" y menú visible -->
 
-<ion-header>
+<ion-header> <!-- Encabezado de Ionic -->
 </ion-header>
-<ion-content>
-  
-  <h1 class="title">Gestión de Notas ULS</h1>
 
-  <div class="image-container">
-    <img src="assets/img/images-home.png" alt="Descripción de la imagen" class="center-image">
+<ion-content> <!-- Contenido principal de la página -->
+  
+  <h1 class="title">Gestión de Notas ULS</h1> <!-- Título principal de la página -->
+
+  <div class="image-container"> <!-- Contenedor de imagen -->
+    <img src="assets/img/ulslogo.png" alt="Descripción de la imagen" class="center-image"> <!-- Imagen del logo de ULS -->
   </div>
 
-  <ion-card class="click-card" (click)="toggleWelcomeContent()">
-    <ion-card-header>
-      <ion-card-title class="click-title">Click Aquí</ion-card-title>
+  <ion-card class="click-card" (click)="toggleWelcomeContent()"> <!-- Tarjeta con clase "click-card" que se puede hacer clic para alternar el contenido de bienvenida -->
+    <ion-card-header> <!-- Encabezado de la tarjeta -->
+      <ion-card-title class="click-title">Click Aquí</ion-card-title> <!-- Título de la tarjeta -->
     </ion-card-header>
   </ion-card>
   
-  <ion-card class="custom-card" *ngIf="showWelcomeContent" (click)="toggleWelcomeContent()">
-    <ion-card-header>
-      <ion-card-title class="welcome-title">Bienvenidos!</ion-card-title>
+  <ion-card class="custom-card" *ngIf="showWelcomeContent" (click)="toggleWelcomeContent()"> <!-- Tarjeta personalizada que solo se muestra si showWelcomeContent es verdadero, y se puede hacer clic para alternar el contenido de bienvenida -->
+    <ion-card-header> <!-- Encabezado de la tarjeta -->
+      <ion-card-title class="welcome-title">Bienvenidos!</ion-card-title> <!-- Título de bienvenida de la tarjeta -->
     </ion-card-header>
-    <ion-card-content class="welcome-content">
+    <ion-card-content class="welcome-content"> <!-- Contenido de la tarjeta -->
       <!-- Contenido de bienvenida -->
       ¡Bienvenido a nuestra aplicación de gestión de notas! Organiza, administra y comparte notas de manera eficiente y segura. Aprovecha la sincronización en tiempo real, la autenticación segura y la capacidad de enviar notas por correo electrónico. También puedes generar reportes PDF para un análisis detallado de los progresos académicos de los estudiantes.
     </ion-card-content>
   </ion-card>
   
-  
- 
 </ion-content>
-

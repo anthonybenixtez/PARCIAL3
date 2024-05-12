@@ -1,72 +1,71 @@
-<app-header [showMenu]="true" title="Maestros"></app-header>
-
+<app-header [showMenu]="true" title="Maestros"></app-header> <!-- Componente de encabezado con menú visible y título "Maestros" -->
 
 <br>
 <br>
 
-<ion-content fullscreen="true">
+<ion-content fullscreen="true"> <!-- Contenido principal de la página -->
 
   <!-------- PRODUCTOS -------->
-<ion-list *ngIf="!loading">
+<ion-list *ngIf="!loading"> <!-- Lista de maestros, se muestra si no se está cargando -->
+
+  <!-- Título -->
   <div class="data ion-text-center">
     <strong>Maestros:</strong>
   </div>
 
   <br>
+
+  <!-- Iteración sobre los maestros -->
   <ion-item-sliding class="product-item" *ngFor="let m of maestros | paginate: { itemsPerPage: 2, currentPage: page }">
-    <ion-item (click)="maestrosDetail(m)">
+    <ion-item (click)="maestrosDetail(m)"> <!-- Elemento de lista para cada maestro, al hacer clic se muestra el detalle del maestro -->
       <ion-label class="ion-text-center">
-        <div class="name"><strong>{{m.name}}</strong></div>
+        <div class="name"><strong>{{m.name}}</strong></div> <!-- Nombre del maestro -->
       </ion-label>
     </ion-item>
 
-          <!--=========== Opciones =============-->
-
+    <!-- Opciones para cada maestro -->
     <ion-item-options>
 
-        <!--=========== Editar Cultivo =============-->
+      <!-- Opción para editar maestro, visible solo para el rol 'Administrador' -->
       <ion-item-option *ngIf="utilsSvc.shouldShowElementForRole('Administrador', userRole)" (click)="AddUpdateMaestros(m)">
         <ion-icon class="option-btn" name="create-outline"></ion-icon>
       </ion-item-option>
 
-                  <!--=========== Eliminar Cultivo =============-->          
+      <!-- Opción para eliminar maestro, visible solo para el rol 'Administrador' -->
       <ion-item-option *ngIf="utilsSvc.shouldShowElementForRole('Administrador', userRole)" (click)="confirmDeleteMaestros(m)" color="danger">
         <ion-icon class="option-btn" name="trash-outline"></ion-icon>
       </ion-item-option>
 
     </ion-item-options>
-
-
   </ion-item-sliding>
 </ion-list>
 
 <!--------------CARGANDO------------------>
 
-<ion-list *ngIf="loading">
-    <ion-item class="product-item" *ngFor="let c of [1,1,1,1,1,1,1,1,1,1]">
-      <ion-avatar slot="start">
-<ion-skeleton-text animated style="width: 100%; height: 100%"></ion-skeleton-text>      </ion-avatar>
-      <ion-label class="ion-text-center">
-<ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
-<ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
-      </ion-label>
-    </ion-item>
+<ion-list *ngIf="loading"> <!-- Lista de carga, se muestra mientras se carga la información -->
+
+  <!-- Elementos de lista simulados mientras se carga -->
+  <ion-item class="product-item" *ngFor="let c of [1,1,1,1,1,1,1,1,1,1]">
+    <ion-avatar slot="start">
+      <ion-skeleton-text animated style="width: 100%; height: 100%"></ion-skeleton-text>
+    </ion-avatar>
+    <ion-label class="ion-text-center">
+      <ion-skeleton-text animated style="width: 50%"></ion-skeleton-text>
+      <ion-skeleton-text animated style="width: 30%"></ion-skeleton-text>
+    </ion-label>
+  </ion-item>
 
 </ion-list>
 
+<!--=========== Nuevo Cultivo =============-->
+<ion-fab vertical="bottom" horizontal="end" slot="fixed"> <!-- Botón flotante para agregar nuevo maestro, visible solo para el rol 'Administrador' -->
+  <ion-fab-button *ngIf="utilsSvc.shouldShowElementForRole('Administrador', userRole)" (click)="AddUpdateMaestros()" color="success">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
 
-
-  <!--=========== Nuevo Cultivo =============-->
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button *ngIf="utilsSvc.shouldShowElementForRole('Administrador', userRole)" (click)="AddUpdateMaestros()" color="success">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-
-  <!-- Paginador -->
-  <div class="ion-text-center">
-  <pagination-controls (pageChange)="page = $event" previouslabel="Anterior" nextlabel="Siguiente"></pagination-controls>
-  </div>
+<!-- Paginador -->
+<div class="ion-text-center">
+  <pagination-controls (pageChange)="page = $event" previouslabel="Anterior" nextlabel="Siguiente"></pagination-controls> <!-- Controles de paginación -->
+</div>
 </ion-content>
-
-
