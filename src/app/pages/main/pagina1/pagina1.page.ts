@@ -20,7 +20,7 @@ export class Pagina1Page implements OnInit {
 
   loading: boolean = false;
   materias: Materias[] = [];
-  cultivoSeleccionado: Materias;
+    materiasSeleccionado: Materias;
   userRole: string = ''; // Aquí deberías obtener el rol del usuario
 
 
@@ -49,12 +49,12 @@ export class Pagina1Page implements OnInit {
     this.getMaterias();
   }
 
-  // Función para abrir el detalle del cultivo seleccionado
+  // Función para abrir el detalle del   materias seleccionado
   async materiasDetail(materia?: Materias) {
     let success = await this.utilsSvc.presentModal({
       component: MateriasDetailComponent,
       cssClass: 'materias-detal-modal',
-      componentProps: {materia} // Pasa el cultivo específico al modal
+      componentProps: {materia} // Pasa el   materias específico al modal
     });
 
     if (success) this.getMaterias();

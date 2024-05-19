@@ -15,7 +15,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 })
 export class AlumnosDetailComponent  implements OnInit {
 
-  @Input() alumno: Alumnos; // Recibe el cultivo específico
+  @Input() alumno: Alumnos; // Recibe el Alumnos específico
 
   
   materias: any[];

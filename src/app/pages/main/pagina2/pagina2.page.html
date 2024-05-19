@@ -24,12 +24,12 @@
 
     <ion-item-options>
 
-        <!--=========== Editar Cultivo =============-->
+        <!--=========== Editar notas =============-->
       <ion-item-option *ngIf="utilsSvc.shouldShowElementForRole('Administrador', userRole)" (click)="AddUpdateMaestros(m)">
         <ion-icon class="option-btn" name="create-outline"></ion-icon>
       </ion-item-option>
 
-                  <!--=========== Eliminar Cultivo =============-->          
+                  <!--=========== Eliminar notas =============-->          
       <ion-item-option *ngIf="utilsSvc.shouldShowElementForRole('Administrador', userRole)" (click)="confirmDeleteMaestros(m)" color="danger">
         <ion-icon class="option-btn" name="trash-outline"></ion-icon>
       </ion-item-option>
@@ -56,7 +56,7 @@
 
 
 
-  <!--=========== Nuevo Cultivo =============-->
+  <!--=========== Nuevo notas =============-->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button *ngIf="utilsSvc.shouldShowElementForRole('Administrador', userRole)" (click)="AddUpdateMaestros()" color="success">
       <ion-icon name="add"></ion-icon>

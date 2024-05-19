@@ -54,12 +54,12 @@ export class Pagina2Page implements OnInit {
     this.getMaestros();
   }
 
-  // Función para abrir el detalle del cultivo seleccionado
+  // Función para abrir el detalle del maestro seleccionado
   async maestrosDetail(maestro?: Maestros) {
     let success = await this.utilsSvc.presentModal({
       component: MaestrosDetailComponent,
       cssClass: 'maestros-detal-modal',
-      componentProps: {maestro} // Pasa el cultivo específico al modal
+      componentProps: {maestro} // Pasa el maestro específico al modal
     });
 
     if (success) this.getMaestros();

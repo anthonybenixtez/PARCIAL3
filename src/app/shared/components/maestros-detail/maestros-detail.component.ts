@@ -10,7 +10,7 @@ import { UtilsService } from 'src/app/services/utils.service';
 })
 export class MaestrosDetailComponent implements OnInit {
 
-  @Input() maestro: Maestros; // Recibe el cultivo específico
+  @Input() maestro: Maestros; // Recibe el maestro específico
   materias: any[];
   materiaSeleccionada: any; // Declaración de la propiedad materiaSeleccionada
 

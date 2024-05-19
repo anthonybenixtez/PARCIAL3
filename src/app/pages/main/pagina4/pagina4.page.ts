@@ -31,57 +31,90 @@ export class Pagina4Page implements OnInit {
     this.getCurrentUser();
   }
 
-  async getCurrentUser() {
-    this.firebaseSvc.getCurrentUserWithRole().subscribe((user: User) => {
+// Esta función asincrónica se encarga de obtener el usuario actual del servicio de Firebase
+async getCurrentUser() {
+  // Se llama a la función `getCurrentUserWithRole()` del servicio de Firebase y se suscribe a los cambios
+  this.firebaseSvc.getCurrentUserWithRole().subscribe((user: User) => {
+      // Cuando se recibe el usuario, se almacena en la variable `this.user`
       this.user = user;
+      // Se almacena el rol del usuario en la variable `this.userRole`
       this.userRole = user.role;
+      // Si el rol del usuario es "Docente"
       if (this.userRole === 'Docente') {
-        this.getMaestroMateriaAndAlumnos();
+          // Se llama a la función `getMaestroMateriaAndAlumnos()` para obtener los datos relacionados con el maestro y sus alumnos
+          this.getMaestroMateriaAndAlumnos();
       } else {
-        this.getAlumnos();
+          // Si el rol del usuario no es "Docente", se llama a la función `getAlumnos()` para obtener los datos de los alumnos
+          this.getAlumnos();
       }
-    });
-  }
+  });
+}
 
-  async getMaestroMateriaAndAlumnos() {
-    this.firebaseSvc.getMaestroByEmail(this.user.email).subscribe((maestro: any) => {
+
+// Esta función asincrónica se encarga de obtener información sobre el maestro, su materia y sus alumnos.
+async getMaestroMateriaAndAlumnos() {
+  // Se llama a la función `getMaestroByEmail()` del servicio de Firebase y se suscribe a los cambios
+  this.firebaseSvc.getMaestroByEmail(this.user.email).subscribe((maestro: any) => {
+      // Se verifica si se ha obtenido información válida sobre el maestro y su materia
       if (maestro && maestro.materiaId) {
-        this.materiaId = maestro.materiaId;
-        this.getAlumnosByMateria();
+          // Si se encontró información sobre la materia del maestro, se almacena el ID de la materia en la variable `this.materiaId`
+          this.materiaId = maestro.materiaId;
+          // Se llama a la función `getAlumnosByMateria()` para obtener los alumnos asociados a esa materia
+          this.getAlumnosByMateria();
       } else {
-        console.log("No se encontró la materia del maestro.");
-        this.loading = false;
+          // Si no se encuentra información sobre la materia del maestro, se muestra un mensaje de error en la consola
+          console.log("No se encontró la materia del maestro.");
+          // Se desactiva el indicador de carga (loading)
+          this.loading = false;
       }
-    });
-  }
+  });
+}
 
 
-  async getMaestroMateria() {
-    this.firebaseSvc.getMaestroByEmail(this.user.email).subscribe((maestro: any) => {
+// Esta función asincrónica se encarga de obtener la materia del maestro utilizando su correo electrónico.
+async getMaestroMateria() {
+  // Se llama a la función `getMaestroByEmail()` del servicio de Firebase y se suscribe a los cambios.
+  this.firebaseSvc.getMaestroByEmail(this.user.email).subscribe((maestro: any) => {
+      // Se verifica si se ha obtenido información válida sobre el maestro y su materia.
       if (maestro && maestro.materiaId) {
-        this.materiaId = maestro.materiaId;
-        this.getAlumnosByMateria(); // Obtener alumnos de la materia del docente
+          // Si se encontró información sobre la materia del maestro, se almacena el ID de la materia en la variable `this.materiaId`.
+          this.materiaId = maestro.materiaId;
+          // Se llama a la función `getAlumnosByMateria()` para obtener los alumnos asociados a esa materia.
+          this.getAlumnosByMateria(); // Obtener alumnos de la materia del docente
       } else {
-        console.log("No se encontró la materia del maestro.");
-        this.loading = false;
+          // Si no se encuentra información sobre la materia del maestro, se muestra un mensaje de error en la consola.
+          console.log("No se encontró la materia del maestro.");
+          // Se desactiva el indicador de carga (loading).
+          this.loading = false;
       }
-    });
-  }
+  });
+}
 
-  async getAlumnosByMateria() {
-    this.loading = true;
-    this.firebaseSvc.getAlumnosByMateria(this.materiaId).subscribe({
+// Esta función asincrónica se encarga de obtener los alumnos asociados a una materia específica.
+async getAlumnosByMateria() {
+  // Se activa el indicador de carga (loading).
+  this.loading = true;
+  // Se llama a la función `getAlumnosByMateria()` del servicio de Firebase y se suscribe a los cambios.
+  this.firebaseSvc.getAlumnosByMateria(this.materiaId).subscribe({
+      // Cuando se obtiene una respuesta exitosa, se procesa la respuesta.
       next: (res: any) => {
-        console.log(res);
-        this.alumnos = res;
-        this.loading = false;
+          // Se muestra la respuesta en la consola.
+          console.log(res);
+          // Se almacenan los alumnos obtenidos en la variable `this.alumnos`.
+          this.alumnos = res;
+          // Se desactiva el indicador de carga (loading).
+          this.loading = false;
       },
+      // Si ocurre un error al obtener los alumnos, se maneja el error.
       error: (error: any) => {
-        console.log("Error al obtener alumnos:", error);
-        this.loading = false;
+          // Se muestra un mensaje de error en la consola.
+          console.log("Error al obtener alumnos:", error);
+          // Se desactiva el indicador de carga (loading).
+          this.loading = false;
       }
-    });
-  }
+  });
+}
+
 
   isAlumnoInMaestroMateria(alumno: Alumnos): boolean {
     // Verificar si el usuario es un docente y tiene una materia asociada

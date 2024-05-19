@@ -58,29 +58,43 @@ signUp(user: User){
   }
   
 
-  // Obtener un maestro por su correo electrónico
-  getMaestroByEmail(email: string): Observable<any> {
-    return this.angularFirestore.collection('Maestros', ref => ref.where('email', '==', email)).valueChanges({ idField: 'id' })
+// Esta función devuelve un observable que busca un maestro en la colección "Maestros" de Firestore utilizando su correo electrónico.
+// Devuelve un solo maestro que coincida con el correo electrónico proporcionado.
+// Parámetros:
+//   - email: El correo electrónico del maestro a buscar.
+// Devuelve:
+//   - Observable<any>: Un observable que emite el maestro encontrado o null si no se encuentra ningún maestro.
+getMaestroByEmail(email: string): Observable<any> {
+  return this.angularFirestore.collection('Maestros', ref => ref.where('email', '==', email))
+      .valueChanges({ idField: 'id' }) // Se obtienen los cambios en la colección "Maestros"
       .pipe(
-        map(maestros => maestros.length > 0 ? maestros[0] : null)
+          map(maestros => maestros.length > 0 ? maestros[0] : null) // Se mapea el resultado para obtener el primer maestro o null si no se encuentra ningún maestro.
       );
-  }
+}
 
+// Esta función devuelve un observable que busca todos los alumnos asociados a un maestro específico en Firestore.
+// Parámetros:
+//   - maestroId: El ID del maestro para el cual se quieren obtener los alumnos.
+// Devuelve:
+//   - Observable<any[]>: Un observable que emite un array de objetos representando los alumnos encontrados.
+getAlumnosByMaestroId(maestroId: string): Observable<any[]> {
+  const path = `/Alumnos`; // Se establece la ruta de la colección "Alumnos"
+  const query = firestoreQuery(collection(getFirestore(), path), where('maestroId', '==', maestroId)); // Se crea una consulta para buscar los alumnos que tienen el mismo maestroId proporcionado
+  return collectionData(query, { idField: 'aid' }); // Se devuelve un observable que emite los cambios en la colección "Alumnos" basados en la consulta establecida.
+}
 
-  // En tu servicio FirebaseService
-  getAlumnosByMaestroId(maestroId: string): Observable<any[]> {
-    const path = `/Alumnos`;
-    const query = firestoreQuery(collection(getFirestore(), path), where('maestroId', '==', maestroId));
-    return collectionData(query, { idField: 'aid' });
-  }
+// Esta función devuelve un observable que busca todos los alumnos asociados a una materia específica en Firestore.
+// Parámetros:
+//   - materiaId: El ID de la materia para la cual se quieren obtener los alumnos.
+// Devuelve:
+//   - Observable<any[]>: Un observable que emite un array de objetos representando los alumnos encontrados.
+// Observaciones:
+//   - Esta función parece estar utilizando el AngularFirestore en lugar del firestore directamente.
+getAlumnosByMateria(materiaId: string): Observable<any[]> {
+  return this.firestore.collection('Alumnos', ref => ref.where('materiaId', '==', materiaId))
+      .valueChanges({ idField: 'aid' }); // Se obtienen los cambios en la colección "Alumnos" donde el campo "materiaId" coincide con el ID de la materia proporcionado.
+}
 
-
-
-    // Obtener alumnos por materia
-    getAlumnosByMateria(materiaId: string): Observable<any[]> {
-      return this.firestore.collection('Alumnos', ref => ref.where('materiaId', '==', materiaId)).valueChanges({ idField: 'aid' });
-    }
-  
 
   //=====================Base de Datos===============================
   //=================== Obtener documentos de una coleccion ================================
@@ -130,7 +144,7 @@ deleteDocument(path: string){
   getMaterias(): Observable<any[]> {
     return this.firestore.collection('Materias').valueChanges({ idField: 'aid' });
   }
-
+  // se agrega la rerlacion 
   getMaestros(): Observable<any[]> {
     return this.firestore.collection('Maestros').valueChanges({ idField: 'aid' });
   }

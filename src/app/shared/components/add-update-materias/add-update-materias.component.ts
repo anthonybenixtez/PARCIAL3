@@ -53,7 +53,7 @@ export class AddUpdateMateriasComponent  implements OnInit {
       this.utilsSvc.dismissModal({ successs: true});
 
       this.utilsSvc.presentToast({
-        message: 'Cultivo creado exitosamente',
+        message: 'Materia creado exitosamente',
         duration: 1500,
         color: 'success',
         position: 'middle',
