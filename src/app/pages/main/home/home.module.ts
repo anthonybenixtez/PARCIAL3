@@ -8,6 +8,8 @@ import { HomePageRoutingModule } from './home-routing.module';
 
 import { HomePage } from './home.page';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { NgChartsModule } from 'ng2-charts';
+
 
 @NgModule({
   imports: [
@@ -15,7 +17,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     FormsModule,
     IonicModule,
     HomePageRoutingModule,
-    SharedModule
+    SharedModule,
+    NgChartsModule//Importo el modulo
   ],
   declarations: [HomePage]
 })

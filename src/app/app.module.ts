@@ -16,6 +16,7 @@ import { environment } from 'src/environments/environment';
 
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { NgChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
     AppRoutingModule, 
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgChartsModule
   ],
 
   providers: [{ provide: RouteReuseStrategy, 

@@ -25,6 +25,17 @@
       ¡Bienvenido a nuestra aplicación de gestión de notas! Organiza, administra y comparte notas de manera eficiente y segura. Aprovecha la sincronización en tiempo real, la autenticación segura y la capacidad de enviar notas por correo electrónico. También puedes generar reportes PDF para un análisis detallado de los progresos académicos de los estudiantes.
     </ion-card-content>
   </ion-card>
+
+
+  <div style="display: block;">
+    <canvas baseChart
+      [datasets]="barChartData"
+      [labels]="barChartLabels"
+      [options]="barChartOptions"
+      [legend]="barChartLegend"
+      type="bar">
+    </canvas>
+  </div>
   
   
  
